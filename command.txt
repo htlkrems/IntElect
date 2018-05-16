@@ -1,0 +1,3 @@
+# Command for manual building of container
+sudo docker volume create mysql_data
+sudo docker run -d --name intelect --mount source=mysql_data,target=/var/lib/mysql --mount type=bind,source=/path-to-repo/intelect-devel,target=/var/www/html/intelect -p 80:80 bsteindl/intelect 
