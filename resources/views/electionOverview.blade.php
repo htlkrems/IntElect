@@ -14,7 +14,7 @@
 		</div></div>
      		<?php
 				foreach ($elections as $election) {
-					if($election->election_end < new DateTime()){
+					if($election->election_end!=null && $election->election_end < date('Y-m-d H:i:s')){
 						continue;
 					}
         	?>
@@ -42,7 +42,7 @@
      		<div class="row valign-wrapper"><div class="col s12"><h3>Abgeschlossene Wahlen</h3></div></div>
      		<?php
 				foreach ($elections as $election) {
-					if($election->election_end > new DateTime()){
+					if($election->election_end!=null && $election->election_end > date('Y-m-d H:i:s')){
 						continue;
 					}
         	?>

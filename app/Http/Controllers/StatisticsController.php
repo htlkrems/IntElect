@@ -36,7 +36,12 @@ class StatisticsController extends Controller
 
     public function showChart(Request $request){
         //return View::make('statistics.showChart')->with('election', 1);
-        return view('electionstatistics', ['election' => Election::findOrFail($request->electionId), 'statistics' => DB::select('SELECT concat(c.name,", ",c.party) AS "name", s.points FROM candidate c JOIN (SELECT sum(v.points) AS "points", c.id FROM election e JOIN candidate c on e.id= c.election_id JOIN vote v on v.candidate_id=c.id WHERE e.id=:id GROUP BY c.id) s ON c.id = s.id;', ['id' => $request->electionId])]);
+	$election=Election::findOrFail($request->electionId);
+	if($election->election_end == null || $election->election_end < date('Y-m-d H:i:s')) {
+	        return view('electionstatistics', ['election' => $election, 'statistics' => DB::select('SELECT concat(c.name,", ",c.party) AS "name", s.points FROM candidate c JOIN (SELECT sum(v.points) AS "points", c.id FROM election e JOIN candidate c on e.id= c.election_id JOIN vote v on v.candidate_id=c.id WHERE e.id=:id GROUP BY c.id) s ON c.id = s.id;', ['id' => $request->electionId])]);
+	} else {
+		return redirect(route('Statistics.showClosedElections', ['message' => 11]));
+	}
     }
 
     public function generateReport(Request $request){

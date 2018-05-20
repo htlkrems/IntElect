@@ -44,6 +44,9 @@ if(message != null){
 		case 10:
                         printMessage('Zuerst Wahlgruppen von User entfernen!', true);
 			break;
+		case 11:
+			printMessage('Aktion in diesem Zeitraum nicht möglich!', true);
+			break;
 
 		// --- SUCCESS ---
 		case 51:

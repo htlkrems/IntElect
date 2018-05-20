@@ -21,6 +21,8 @@ class EglController extends Controller
     	try {
 	    if(!validateInputs([ Input::get('election_id'), Input::get('election_group_id'), Input::get('amount') ])) { return redirect(route('egl.showStartPage', ['message' => 1])); }
             $eId=Input::get('election_id');
+	    $election=Election::findOrFail($eId);
+	    if($election->election_begin == null || ($election->election_begin < date('Y-m-d H:i:s') && $election->election_end > date('Y-m-d H:i:s'))) {
             $egId=Input::get('election_group_id');
             $amount=Input::get('amount');
     		DB::beginTransaction();
@@ -43,6 +45,7 @@ class EglController extends Controller
     		}
     		DB::commit();
     		return redirect(route('egl.showStartPage', ['message'=>56]));
+	    } else { return redirect(route('egl.showStartPage', ['message'=>11])); }
     	} catch (Exception $e) {
     		DB::rollBack();
     		return parent::report($e);
