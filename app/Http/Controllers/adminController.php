@@ -320,7 +320,7 @@ class AdminController extends Controller
                         $election->name=$request->e_name;
                         $election->description=$request->e_description;
                         $election->candidate_registration_begin=$request->e_candidate_registration_begin;
-                        $election->candidate_registragion_end=$request->e_candidate_registragion_end;
+                        $election->candidate_registration_end=$request->e_candidate_registration_end;
                         $election->election_begin=$request->e_election_begin;
                         $election->election_end=$request->e_election_end;
                         $election->type=$request->e_type;
@@ -357,7 +357,7 @@ class AdminController extends Controller
                 $newElection->description=$request->description;
                 $newElection->type=$request->type; // 1 = Punktesystem, 0 = Kreuzsystem
                 $newElection->candidate_registration_begin=$request->candidate_registration_begin;
-                $newElection->candidate_registragion_end=$request->candidate_registration_end;
+                $newElection->candidate_registration_end=$request->candidate_registration_end;
                 $newElection->election_begin=$request->election_begin;
                 $newElection->election_end=$request->election_end;
                 $newElection->save();

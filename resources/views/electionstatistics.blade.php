@@ -14,8 +14,8 @@
     <div class="col s12">
       <div class="chart-container responsive">
         <h2><?php echo $election->name; ?></h2> 
-        <p><b>Beginn der Wahl: </b>{{ $election->election_begin }}</p>
-        <p><b>Ende der Wahl: </b>{{ $election->election_end }}</p>
+        <p><b>Beginn der Wahl: </b>{{ date("d.m.Y H:i:s", strtotime($election->election_begin)) }}</p>
+        <p><b>Ende der Wahl: </b>{{ date("d.m.Y H:i:s", strtotime($election->election_end)) }}</p>
         <p>{{ $election->description }}</p>
       </div>
     </div>

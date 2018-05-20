@@ -170,7 +170,7 @@
                         					<div class="input-field col s12">
                         						<h5>Registrierungszeit</h5>
                             					<input type="text" class="datepicker" id="crb" name="e_candidate_registration_begin" value="{{$election->candidate_registration_begin}}" placeholder="Von: ">
-                            					<input type="text" class="datepicker" id="cre" name="e_candidate_registragion_end" value="{{$election->candidate_registragion_end}}" placeholder="Bis: ">
+                            					<input type="text" class="datepicker" id="cre" name="e_candidate_registration_end" value="{{$election->candidate_registration_end}}" placeholder="Bis: ">
                             				</div>
 			    						<div class="input-field col s12">
 			    							<h5>Wahlzeit</h5>
@@ -195,11 +195,11 @@
 					                            	} else {
 					                            		?>
 					                            			<p>
-								                                <input name="e_type" type="radio" class='tovalidate' id="type_id1" value="0" />
+								                                <input name="e_type" type="radio" class='tovalidate' id="type_id1" value="1" />
 								                                 <label for="type_id1" style="color: #000000">Punktesystem</label>
 					                            			</p>
 								                            <p>
-								                                <input name="e_type" type="radio" class='tovalidate' id="type_id2" value="1" checked="true" />
+								                                <input name="e_type" type="radio" class='tovalidate' id="type_id2" value="0" checked="true" />
 								                                <label for="type_id2" style="color: #000000">Kreuzsystem</label>
 								                            </p>
 					                            		<?php

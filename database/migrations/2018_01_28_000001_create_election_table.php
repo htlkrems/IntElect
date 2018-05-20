@@ -15,7 +15,7 @@ class CreateElectionTable extends Migration {
             $table->text('description')->nullable($value = true);
             $table->boolean('type')->nullable($value = false);
             $table->dateTime('candidate_registration_begin')->nullable($value = true);
-            $table->dateTime('candidate_registragion_end')->nullable($value = true);
+            $table->dateTime('candidate_registration_end')->nullable($value = true);
             $table->dateTime('election_begin')->nullable($value = true);
             $table->dateTime('election_end')->nullable($value = true);
             $table->softDeletes();

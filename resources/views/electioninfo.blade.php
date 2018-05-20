@@ -12,10 +12,10 @@
   <div class="row">
     <div class="col s12">
         <h4>{{$election->name}}</h4><br> 
-        <p><b>Beginn der Kandidatenregistrierung: </b>{{ $election->candidate_registration_begin }}</p>
-        <p><b>Ende der Kandidatenregistrierung: </b>{{ $election->candidate_registragion_end }}</p>
-        <p><b>Beginn der Wahl: </b>{{ $election->election_begin }}</p>
-        <p><b>Ende der Wahl: </b>{{ $election->election_end }}</p>
+        <p><b>Beginn der Kandidatenregistrierung: </b>{{ date("d.m.Y H:i:s", strtotime($election->candidate_registration_begin)) }}</p>
+        <p><b>Ende der Kandidatenregistrierung: </b>{{ date("d.m.Y H:i:s", strtotime($election->candidate_registration_end)) }}</p>
+        <p><b>Beginn der Wahl: </b>{{ date("d.m.Y H:i:s", strtotime($election->election_begin)) }}</p>
+        <p><b>Ende der Wahl: </b>{{ date("d.m.Y H:i:s", strtotime($election->election_end)) }}</p>
         <p>{{ $election->description }}</p>
     </div>
     <div class="col s12">

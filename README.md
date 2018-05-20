@@ -12,7 +12,8 @@ Docker (we recommend using the latest version - e.g. from the official repositor
 ` docker run --name intelect --mount source=mysql_data,target=/var/lib/mysql --mount type=bind,source=/path/to/IntElect,target=/var/www/html/intelect -d -p 80:80 bsteindl/intelect `
 
 3. Prepare the database
-``` docker exec -it intelect bash
+```
+ docker exec -it intelect bash
  cd /var/www/html/intelect/
  composer install
  chmod 775 storage/ -R
@@ -20,7 +21,8 @@ Docker (we recommend using the latest version - e.g. from the official repositor
  php artisan migrate
  mysql -u intelect-user -p5G7XC4bhNw92GGccjpfVQbS < /var/www/html/intelect/app/database_init.sql 
  exit
- docker stop intelect ```
+ docker stop intelect
+```
 
 4. Run it as a daemon
 ` docker run --mount source=mysql_data,target=/var/lib/mysql --mount type=bind,source=/path/to/IntElect,target=/var/www/html/intelect -d -p 80:80 bsteindl/intelect `
