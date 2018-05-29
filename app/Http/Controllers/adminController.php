@@ -1,5 +1,6 @@
 <?php
 
+// set namespace
 namespace App\Http\Controllers;
 use View;
 use Illuminate\Http\Request;
@@ -13,28 +14,40 @@ use App\User;
 use App\Election;
 use App\ElectionGroup;
 
+// include function for input validation
 include(app_path().'/includes/validation.php');
 
 class AdminController extends Controller
 {
 
+   /*
+    *  gets every nessesary data from the db and returns the admin startpage
+    */
    public function showStartPage(Request $request)
     {
         if (Session::has('role')) {
             if (Session::get('role') == 1) {
+
+		// get all closed elections
                 $closedelections = DB::table('election')
                                     ->where('election_end', '<=', date('Y-m-d H:i:s'))
                                     ->orWhereNull('election_end')
                                     ->orderBy('election_end','desc')
                                     ->take(5)
                                     ->get();
+
+		// get all running elections
                 $runningelections = DB::table('election')
                                     ->where('election_end','>=',date('Y-m-d H:i:s'))
                                     ->orWhereNull('election_end')
                                     ->get();
+
+		// get candidates that have been accepted by admin
                 $verifiedcandidates=DB::table('candidate')
                                     ->where('verified',1)
                                     ->get();
+
+		// get all candidates that have been verified yet
                 $unverifiedcandidates = DB::table('candidate')
                                         ->select('candidate.id as cid', 'candidate.name as cname', 'candidate.party as cparty', 'election.name as ename')
                                         ->join('election','election.id','=','candidate.election_id')
@@ -47,12 +60,16 @@ class AdminController extends Controller
         return redirect(route('Home.showLogin', ['message' => 3]));
     }
 
+    /*
+     *  saves a new user into the db from the request
+     */
     public function createUser(Request $request)
     {
         if (Session::has('role')) {
             if (Session::get('role') == 1) {
 		try {
 			if(!validateInputs([ $request->username ])) { return redirect(route('admin.showUserCreate', ['message'=>1]));  }
+			//checkes if the username already exists
 			if(DB::table('user')->where('username', '=', $request->username)->count('id')>0) { return redirect(route('admin.showUserCreate', ['message'=>9])); }
 			DB::beginTransaction();
          	        $newUser = new User();
@@ -81,12 +98,16 @@ class AdminController extends Controller
         return redirect(route('Home.showLogin', ['message' => 3]));
     }
 
+    /*
+     *  updates a user in db
+     */
     public function editUser(Request $request){
         if (Session::has('role')) {
             if (Session::get('role') == 1) {
 		try {
 			if(!validateInputs([ $request->username ])) { return redirect(route('admin.showUsers', ['message'=>1]));  }
 			$user = User::find($request->user_id);
+			// checks if username already exists
 			if($user->username!=$request->username && DB::table('user')->where('username', '=', $request->username)->count('id')>0) { return redirect(route('Admin.showUsersEdit', ['id'=>$request->user_id, 'message' => 9])); }
 			DB::beginTransaction();
 
@@ -126,6 +147,9 @@ class AdminController extends Controller
             return redirect(route('Home.showLogin', ['message' => 3]));
         }
 
+    /*
+     *  the candidate will be updated to a verified one in db
+     */
     public function verifyCandidate(Request $request){
         if (Session::has('role')) {
             if (Session::get('role') == 1) {
@@ -137,9 +161,10 @@ class AdminController extends Controller
             }
             return redirect(route('Home.showLogin', ['message' => 3]));
         }
-        
-    
 
+    /*
+     *  the denied candidate will be deleted
+     */
     public function denyCandidate(Request $request){
         if (Session::has('role')) {
             if (Session::get('role') == 1) {
@@ -151,6 +176,9 @@ class AdminController extends Controller
                 return redirect(route('Home.showLogin', ['message' => 3]));
             }
 
+    /*
+     *  get all users from db and returns the view
+     */
     public function showUsers(Request $request)
     {
         if (Session::has('role')) {
@@ -165,6 +193,9 @@ class AdminController extends Controller
         return redirect(route('Home.showLogin', ['message' => 3]));
     }
 
+    /*
+     *  gets the old userdata from db and returns the view
+     */
     public function showUsersEdit(Request $request)
     {
         if (Session::has('role')) {
@@ -177,14 +208,19 @@ class AdminController extends Controller
         return redirect(route('Home.showLogin', ['message' => 3]));
     }
 
+   /*
+    *  gets all nessesary data and returns the view
+    */
    public function showElectionGroups(Request $request)
     {
         if (Session::has('role')) {
             if (Session::get('role') == 1) {
+		// get all electiongroups
                 $electiongroups = DB::table('election_group')
                                     ->select('user.username as uname','election_group.name as name','election_group.member_count as member_count','election_group.id as egid','election_group.id as id')
                                     ->leftJoin('user','user.id','=','election_group.user_id')
                                     ->get();
+		// get all data from interim table
                 $electionegs = DB::table('election_election_group')
                                 ->select('election_election_group.election_group_id as election_group_id','election.name as election_name')
                                 ->join('election','election.id','=','election_election_group.election_id')
@@ -195,6 +231,9 @@ class AdminController extends Controller
         return redirect(route('Home.showLogin', ['message' => 3]));
     }
 
+    /*
+     *  get old electiongroup data and return view
+     */
     public function showEGEdit(Request $request)
     {
         if (Session::has('role')) {
@@ -207,6 +246,9 @@ class AdminController extends Controller
         return redirect(route('Home.showLogin', ['message' => 3]));
     }
 
+    /*
+     *  gets all users that are election group leader and returns view
+     */
     public function showEGCreate(Request $request)
     {
         if(Session::has('role')) {
@@ -218,6 +260,9 @@ class AdminController extends Controller
 	return redirect(route('Home.showLogin', ['message' => 3]));
     }
 
+    /*
+     *  updates the electiongroup in the db
+     */
     public function editEG(Request $request){
 		if(Session::has('role')) {
             if (Session::get('role') == 1) {
@@ -243,6 +288,9 @@ class AdminController extends Controller
         return redirect(route('Home.showLogin', ['message' => 3]));
     }
 
+    /*
+     *  returns the view for creating a new user
+     */
     public function showUserCreate(Request $request)
     {
         if (Session::has('role')) {
@@ -253,7 +301,10 @@ class AdminController extends Controller
         }
         return redirect(route('Home.showLogin', ['message' => 3]));
     }
-    
+
+    /*
+     *  inserts the new electiongroup in db
+     */
     public function createElectionGroup(Request $request){
         if(Session::has('role')) {
             if (Session::get('role') == 1) {
@@ -279,30 +330,39 @@ class AdminController extends Controller
         return redirect(route('Home.showLogin', ['message' => 3]));
     }
 
+    /*
+     *  gets all nessesary data and returns the view
+     */
     public function showElectionEdit(Request $request){
         if(Session::has('role')) {
             if (Session::get('role') == 1) {
+		// get the election
                 $election = DB::table('election')
                                 ->where('id',$request->eId)->first();
+		// get the amount of elecitons the election group participates in
                 $elegroupcount = DB::table('election_election_group')
                                     ->select(DB::raw('count(*) as elegroupcount'))
                                     ->where('election_id',$request->eId)
                                     ->groupBy('election_id')->first();
+		// get the summed amount of all members
                 $votercount = DB::table('election_election_group')
                                     ->select(DB::raw('sum(election_group.member_count) as votercount'))
                                     ->join('election_group','election_group.id','=','election_election_group.election_group_id')
                                     ->where('election_election_group.election_id',$request->eId)
                                     ->groupBy('election_election_group.election_id')->first();
+		// get the candidates
                 $candidates = DB::table('candidate')
                                 ->where('election_id',$request->eId)
                                 ->where('verified',1)
                                 ->get();
+		// get all election groups where for one election
                 $electiongroupsinelection = DB::table('election_group')
                                                 ->select(DB::raw('election_group.name as ename, election_group.member_count as emember_count,user.username as uname, user.id as uid, election_group.id as eid'))
                                                 ->join('user','user.id','=','election_group.user_id')
                                                 ->join('election_election_group','election_election_group.election_group_id','=','election_group.id')
                                                 ->where('election_election_group.election_id',$request->eId)->get();
-                $electiongroupsnotinelection = DB::table('election_group')
+                // get all election groups with the leader's name
+		$electiongroupsnotinelection = DB::table('election_group')
                                                 ->select(DB::raw('election_group.name as ename, election_group.member_count as emember_count,user.username as uname, user.id as uid, election_group.id as eid'))
                                                 ->join('user','user.id','=','election_group.user_id')
                                                 ->get();
@@ -312,7 +372,10 @@ class AdminController extends Controller
         return redirect(route('Home.showLogin', ['message' => 3]));
     }
 
-	public function electionEdit(Request $request){
+    /*
+     *  update the election in db
+     */
+    public function electionEdit(Request $request){
         if(Session::has('role')) {
             if (Session::get('role') == 1) {
                 	if(!validateInputs([ $request->e_name, $request->e_description ])) { return redirect(route('admin.showElectionEdit', ['eId'=>$request->electionid, 'message' => 1])); }
@@ -332,8 +395,11 @@ class AdminController extends Controller
         return redirect(route('Home.showLogin', ['message' => 3]));
     }
 
-	public function electionCandidateEdit(Request $request){
-		if(Session::has('role')) {
+    /*
+     *  update a candidate in db
+     */
+    public function electionCandidateEdit(Request $request){
+	if(Session::has('role')) {
             if (Session::get('role') == 1) {
 				if(!validateInputs([ $request->c_name, $request->c_party ])) { return redirect(route('admin.showElectionEdit', ['eId'=>$request->electionid, 'message' => 1])); }
 				$candidate=Candidate::find('election_id',$request->electionid);
@@ -345,8 +411,11 @@ class AdminController extends Controller
 		}
 		return redirect(route('Home.showLogin', ['message' => 3]));
 	}
-	
-	public function createElection(Request $request)
+
+    /*
+     *  insert new election in db
+     */
+    public function createElection(Request $request)
     {
         if(Session::has('role')) {
             if (Session::get('role') == 1) {
@@ -367,7 +436,10 @@ class AdminController extends Controller
         }
         return redirect(route('Home.showLogin', ['message' => 3]));
     }
-    
+
+    /*
+     *  get all elections and return view
+     */
     public function showElections(Request $request){
         if(Session::has('role')) {
             if (Session::get('role') == 1) {
@@ -378,6 +450,9 @@ class AdminController extends Controller
         return redirect(route('Home.showLogin', ['message' => 3]));
     }
 
+    /*
+     *  return view for creating a new election
+     */
     public function showElectionCreate(Request $request)
     {
         if(Session::has('role')) {
@@ -388,7 +463,9 @@ class AdminController extends Controller
         return redirect(route('Home.showLogin', ['message' => 3]));
     }
     
-    
+    /*
+     *  insert a new candidate in db
+     */
     public function addCandidate(Request $request)
 	{
         if(Session::has('role')) {
@@ -412,8 +489,11 @@ class AdminController extends Controller
         }
         return redirect(route('Home.showLogin', ['message' => 3]));
 	}
-	
-	public function removeCandidate(Request $request){
+
+    /*
+     *  delete candidate and votes from db
+     */
+    public function removeCandidate(Request $request){
         if(Session::has('role')) {
             if (Session::get('role') == 1) {
                 try {
@@ -431,8 +511,11 @@ class AdminController extends Controller
         }
         return redirect(route('Home.showLogin', ['message' => 3]));
     }
-	
-	   public function addEG(Request $request){
+
+    /*
+     *  insert a new election group in db
+     */
+    public function addEG(Request $request){
         if(Session::has('role')) {
             if (Session::get('role') == 1) {
                 try {
@@ -454,8 +537,11 @@ class AdminController extends Controller
             }
             return redirect(route('Home.showLogin', ['message' => 3]));
         }
-	
-	public function deleteEG(Request $request){
+
+    /*
+     *  delete a election group from db
+     */
+    public function deleteEG(Request $request){
         if(Session::has('role')) {
             if (Session::get('role') == 1) {
                 DB::table('election_group')->where([
@@ -467,7 +553,10 @@ class AdminController extends Controller
         return redirect(route('Home.showLogin', ['message' => 3]));
 	}
 
-	public function deleteElection(Request $request){
+    /*
+     *  delete a election from db
+     */
+    public function deleteElection(Request $request){
         if(Session::has('role')) {
             if (Session::get('role') == 1) {
                 DB::table('election')->where([
@@ -479,7 +568,10 @@ class AdminController extends Controller
         return redirect(route('Home.showLogin', ['message' => 3]));
         }
 
-	public function deleteUser(Request $request){
+    /*
+     *  delete a user from db
+     */
+    public function deleteUser(Request $request){
         if(Session::has('role')) {
             if (Session::get('role') == 1) {
 		if(DB::table('election_group')->where('user_id', '=', $request->u_id)->count('id')>0){ return redirect(route('admin.showUsers', ['message' => 10 ])); }
@@ -492,7 +584,10 @@ class AdminController extends Controller
         return redirect(route('Home.showLogin', ['message' => 3]));
         }
 
-        public function removeEG(Request $request){
+    /*
+     *  remove a election group from election
+     */
+    public function removeEG(Request $request){
         if(Session::has('role')) {
             if (Session::get('role') == 1) {
                 try {
