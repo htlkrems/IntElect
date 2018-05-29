@@ -1,5 +1,5 @@
 <?php
-
+// set namespace
 namespace App\Http\Controllers;
 use View;
 use Illuminate\Http\Request;
@@ -10,16 +10,20 @@ use Illuminate\Support\Facades\Auth;
 use PDF;
 use DB;
 use Session;
-
+//include method for input validation
 include(app_path().'/includes/validation.php');
-
+/*
+  The HomeController is responsible for the startpage of the application and general functionality.
+  This class shows several different pages, enables visitors to register for an election, provides the login and changePassword functionality. 
+*/
 class HomeController extends Controller{
-    
+  //Shows the StartPage
   public function showStartPage(Request $request) {
       return view('startpage', ['message' => $request->message]);
   }
-
+  //Shows the Login Page
   public function showLogin(Request $request){
+    //Check if user is already logged in and redirects user
 	if (Session::has('role')) {
             if (Session::get('role') == 1) {
 	    	return redirect(route('admin.showStartPage'));
@@ -30,10 +34,13 @@ class HomeController extends Controller{
 	}
       return view('login', ['message' => $request->message]);
   }
+  //Shows the Register page.
   public function showRegister(Request $request) {
-      $runningelections=DB::table('election')->where([ ['candidate_registration_begin','<',date('Y-m-d H:i:s')], ['candidate_registration_end', '>', date('Y-m-d H:i:s')]])->orWhereNull('candidate_registration_end')->get();
+      $runningelections=DB::table('election')->where('election_end','>=',date('Y-m-d H:i:s'))
+                                         ->orWhereNull('election_end')->get();
         return view('registerpage', ['elections'=>$runningelections, 'message' => $request->message]);
   }
+  //Writes the Registration information into the database
   public function Register(Request $request) {
 	    if(!validateInputs([ $request->firstName, $request->lastName, $request->partyinput, $request->DescriptionInput, $request->electionselect ])) { return redirect(route('Home.showRegister', ['message' => 1])); }
 	    $newCandidate = new Candidate();
@@ -53,7 +60,7 @@ class HomeController extends Controller{
 	    $newCandidate->save();
       return redirect(route('Home.showStartPage', ['message'=> 54]));
   }
-
+  //Login-Functionality
   public function login(Request $request) {
 	if(!validateInputs([ $request->username ])) { return redirect(route('Home.showLogin', ['message' => 1])); }
         // create our user data for the authentication
@@ -82,13 +89,13 @@ class HomeController extends Controller{
               return redirect(route('Home.showLogin', ['message' => 2]));
          }
     }
+    //Logout-Functionality
     public function logout(Request $request)
     {
     	Session::flush();
     	return redirect(route('Home.showStartPage', ['message' => 52]));
     }
-
-    
+    //Changes the password in the database
     public function changePassword(Request $request){
       $usercheck = User::find($request->userid);
       if (!is_null($request->session()->get('role'))) {
@@ -116,7 +123,7 @@ class HomeController extends Controller{
       }
       return redirect(route('Home.showLogin', ['message'=>3]));
     }
-
+    //Shows the ChangePassword-Page
     public function showChangePassword(Request $request){
       if (Session::has('role')&&Session::has('username')) {
         $user = DB::table('user')->where('username', '=', Session::get('username'))->first();
