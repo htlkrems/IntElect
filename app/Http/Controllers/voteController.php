@@ -52,9 +52,11 @@ class VoteController extends Controller {
             $token=$request->token;
             $tokenInDB=DB::table('token')->where('token', $token)->first();
                 $request->session()->put('token', $token);
-            $election=Election::where('id', $tokenInDB->election_id)->first();
+            $election=DB::table('election')->where('id', $tokenInDB->election_id)->first();
             if($tokenInDB->already_used==0){
-                return redirect(route('Vote.showElectionInfo',['electionid'=>$election->id]));
+                if($election->election_begin==null || ($election->election_begin < date('Y-m-d H:i:s') && $election->election_end > date('Y-m-d H:i:s'))) {
+-                	return redirect(route('Vote.showElectionInfo',['electionid'=>$election->id]));
+-		         } else { return redirect(route('Vote.showTokenMask', ['message' => 11])); } // time contrstraint
             } else {
                 return redirect(route('Vote.showTokenMask', ['message' => 5])); // token already used
         }
@@ -72,6 +74,7 @@ class VoteController extends Controller {
         $votes=$request->votes;
         $electionGroupId=$request->electiongroupid;
         $election = Election::findOrFail($request->electionid);
+        if(!($election->election_begin==null || ($election->election_begin < date('Y-m-d H:i:s') && $election->election_end > date('Y-m-d H:i:s')))) { return redirect(route('Vote.showTokenMask', ['message' => 11])); }
         foreach ($votes as $candidateId => $vote) {
             $checker = 0;
             //check if the vote is valid
