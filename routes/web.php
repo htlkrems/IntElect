@@ -11,6 +11,16 @@
 |
 */
 
+$proxy_url    = getenv('PROXY_URL');
+$proxy_scheme = getenv('PROXY_SCHEME');
+
+if (!empty($proxy_url)) {
+   URL::forceRootUrl($proxy_url);
+}
+if (!empty($proxy_scheme)) {
+   URL::forceScheme($proxy_scheme);
+}
+
 Route::get('/', 'HomeController@showStartpage')->name('Home.showStartPage');
 //route to show the register form
 Route::get('registerasCandidate', 'HomeController@showRegister')->name('Home.showRegister');
