@@ -45,8 +45,6 @@
 							echo "<td>";
 							echo $validVotes->countvalidvotes;
 							echo "</td>";
-						}else{
-							echo "<td>0</td>";
 						}
 					}
 				}
