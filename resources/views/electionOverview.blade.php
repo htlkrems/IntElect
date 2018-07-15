@@ -21,10 +21,10 @@
           <div class="card hoverable grey lighten-4">
             <div class="card-content">
               <div class="card-title row">
-		<div class="col s9">{{$election->name}}</div>
-		<div class="col s1"> <a href="{{route('admin.showElectionEdit', ['id' => $election->id])}}" class="btn-floating btn-medium waves-effect waves-light red"><i class="material-icons">edit</i></a> </div>
-		<div class="col s1"> <a href="{{route('admin.closeElection', ['eId' => $election->id])}}" class="btn-floating btn-medium waves-effect waves-light red"><i class="material-icons">assignment_turned_in</i></a> </div>
-		<div class="col s1"> <a href="{{route('admin.deleteElection', ['e_id'=>$election->id])}}" class="btn-floating btn-medium waves-effect waves-light red"><i class="small material-icons">delete</i></a> </div>
+		<div class="col s6 m9">{{$election->name}}</div>
+		<div class="col s2 m1"> <a href="{{route('admin.showElectionEdit', ['id' => $election->id])}}" class="btn-floating btn-medium waves-effect waves-light red"><i class="material-icons">edit</i></a> </div>
+		<div class="col s2 m1"> <a href="{{route('admin.closeElection', ['eId' => $election->id])}}" class="btn-floating btn-medium waves-effect waves-light red"><i class="material-icons">assignment_turned_in</i></a> </div>
+		<div class="col s2 m1"> <a href="{{route('admin.deleteElection', ['e_id'=>$election->id])}}" class="btn-floating btn-medium waves-effect waves-light red"><i class="small material-icons">delete</i></a> </div>
 	      </div>
 	      <p>
 		 <i class="material-icons">info</i> {{$election->candidates}} Kandidaten, {{$election->election_groups}} Wahlgruppen, {{$election->member_count}} Wahlberechtigte
@@ -51,10 +51,10 @@
 		<div class="card hoverable grey lighten-4">
             <div class="card-content">
               <div class="card-title row">
-                <div class="col s9">{{$election->name}}</div>
-                <div class="col s1"> <a href="{{route('Statistics.showChart', ['election_id'=>$election->id])}}" class="btn-floating btn-medium waves-effect waves-light red"><i class="small material-icons">assessment</i></a> </div>
-                <div class="col s1"> <a href="{{route('Statistics.generateReport', ['election_id'=>$election->id])}}" class="btn-floating btn-medium waves-effect waves-light red"><i class="small material-icons">share</i></a> </div>
-		<div class="col s1"> <a href="{{route('admin.deleteElection', ['e_id'=>$election->id])}}" class="btn-floating btn-medium waves-effect waves-light red"><i class="small material-icons">delete</i></a> </div>
+                <div class="col s6 m9">{{$election->name}}</div>
+                <div class="col s2 m1"> <a href="{{route('Statistics.showChart', ['election_id'=>$election->id])}}" class="btn-floating btn-medium waves-effect waves-light red"><i class="small material-icons">assessment</i></a> </div>
+                <div class="col s2 m1"> <a href="{{route('Statistics.generateReport', ['election_id'=>$election->id])}}" class="btn-floating btn-medium waves-effect waves-light red"><i class="small material-icons">share</i></a> </div>
+		<div class="col s2 m1"> <a href="{{route('admin.deleteElection', ['e_id'=>$election->id])}}" class="btn-floating btn-medium waves-effect waves-light red"><i class="small material-icons">delete</i></a> </div>
               </div>
               <p>   
                  <i class="material-icons">info</i> {{$election->candidates}} Kandidaten, {{$election->election_groups}} Wahlgruppen, {{$election->member_count}} Wahlberechtigte
