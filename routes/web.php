@@ -72,6 +72,8 @@ Route::get('admin/eg/{egid}/delete','AdminController@deleteEG')->name('admin.del
 Route::get('admin/eg/create','AdminController@showEGCreate')->name('admin.showEGCreate');
 //showeditElection
 Route::get('admin/election/edit/{eId}','AdminController@showElectionEdit')->name('admin.showElectionEdit');
+//closeElection
+Route::get('admin/election/{eId}/close','AdminController@closeElection')->name('admin.closeElection');
 //showcreateElection
 Route::get('admin/election/create','AdminController@showElectionCreate')->name('admin.showElectionCreate');
 //createElection

@@ -208,6 +208,19 @@ class AdminController extends Controller
         return redirect(route('Home.showLogin', ['message' => 3]));
     }
 
+   public function closeElection(Request $request)
+   {
+	if (Session::has('role')) {
+            if (Session::get('role') == 1) {
+			$election=Election::findOrFail($request->eId);
+			$election->election_end=date('Y-m-d H:i').':'.(date('s')-1); // current date minus one second
+			$election->save();
+			return redirect(route('admin.showElectionOverview'));
+		}
+        }
+        return redirect(route('Home.showLogin', ['message' => 3]));
+   }
+
    /*
     *  gets all nessesary data and returns the view
     */
@@ -426,7 +439,7 @@ class AdminController extends Controller
                 $newElection->description=$request->description;
                 $newElection->type=$request->type; // 1 = Punktesystem, 0 = Kreuzsystem
 		$newElection->candidate_registration_begin=$request->candidate_registration_begin_date.' '.$request->candidate_registration_begin_time;
-                $newElection->candidate_registragion_end=$request->candidate_registration_end_date.' '.$request->candidate_registration_end_time;
+                $newElection->candidate_registration_end=$request->candidate_registration_end_date.' '.$request->candidate_registration_end_time;
                 $newElection->election_begin=$request->election_begin_date.' '.$request->election_begin_time;
                 $newElection->election_end=$request->election_end_date.' '.$request->election_end_time;
                 $newElection->save();
