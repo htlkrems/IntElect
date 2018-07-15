@@ -29,12 +29,22 @@
                         <div class="input-field col s12">
 			    <div class="row">
                             	<h5><i class="material-icons">access_time</i> Kandidatenanmeldung</h5>
-                            	<h5 class="col s2">Von</h5> <input type="text" class="datepicker col s3 tovalidate" style="font-size: 20px" name="candidate_registration_begin"> <h5 class="col s2 offset-s1">bis </h5> <input type="text" class="datepicker col s3 tovalidate" name="candidate_registration_end">
+				<div class="row">
+	                            	<h5 class="col s2">Von</h5> <input type="text" class="datepicker col s3 tovalidate" placeholder="Datum" style="font-size: 20px" name="candidate_registration_begin_date" required> <h5 class="col s2">um</h5> <input type="text" class="timepicker col s3" name="candidate_registration_begin_time" placeholder="Uhrzeit" style="font-size: 20px" required> <!-- <h5 class="col s2 offset-s1">bis </h5> <input type="text" class="datepicker col s3 tovalidate" name="candidate_registration_end_date"> <input type="text" class="timepicker" name="candidate_registration_end_time" style="font-size: 20px"> -->
+				</div>
+				<div class="row">
+					<h5 class="col s2">bis </h5> <input type="text" class="datepicker col s3 tovalidate" name="candidate_registration_end_date" placeholder="Datum" style="font-size: 20px" required> <h5 class="col s2">um</h5> <input placeholder="Uhrzeit" type="text" class="timepicker col s3" name="candidate_registration_end_time" style="font-size: 20px" required>
+				</div>
                             </div>
 			    <div class="row">
 			    	<h5><i class="material-icons">access_time</i> Wahlzeit</h5>
                              <!--	<h5 class="col s1">Von</h5> <input type="text" class="datepicker col s5 tovalidate" name="election_begin"> <h5 class="col s1">bis</h5> <input type="text" class="datepicker col s5 tovalidate" name="election_end"> -->
-				<h5 class="col s2">Von</h5> <input type="text" class="datepicker col s3 tovalidate" style="font-size: 20px" name="election_begin"> <h5 class="col s2 offset-s1">bis </h5> <input type="text" class="datepicker col s3 tovalidate" name="election_end">
+				<div class="row">
+					<h5 class="col s2">Von</h5> <input placeholder="Datum" type="text" class="datepicker col s3 tovalidate" style="font-size: 20px" name="election_begin_date" required> <h5 class="col s2">um</h5> <input placeholder="Uhrzeit" type="text" class="timepicker col s3" name="election_begin_time" style="font-size: 20px" required>
+				</div>
+				<div class="row">
+					<h5 class="col s2">bis </h5> <input placeholder="Datum" type="text" class="datepicker col s3 tovalidate" name="election_end_date" style="font-size: 20px" required> <h5 class="col s2">um</h5> <input placeholder="Uhrzeit" type="text" class="timepicker col s3" name="election_end_time" style="font-size: 20px" required>
+				</div>
 			    </div>
                         </div>
 		   <div class="row">
@@ -58,6 +68,7 @@
 </div>
 <script>
 $( document ).ready(function() {
+   $('.timepicker').pickatime({'twelvehour': false});
    $('.datepicker').pickadate({
     monthsFull: ['Januar', 'Feber', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
     weekdaysShort: ['Mon', 'Die', 'Mit', 'Don', 'Fre', 'Sam', 'Son'],

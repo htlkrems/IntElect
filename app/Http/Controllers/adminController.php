@@ -425,10 +425,10 @@ class AdminController extends Controller
                 $newElection->name=$request->name;
                 $newElection->description=$request->description;
                 $newElection->type=$request->type; // 1 = Punktesystem, 0 = Kreuzsystem
-                $newElection->candidate_registration_begin=$request->candidate_registration_begin;
-                $newElection->candidate_registration_end=$request->candidate_registration_end;
-                $newElection->election_begin=$request->election_begin;
-                $newElection->election_end=$request->election_end;
+		$newElection->candidate_registration_begin=$request->candidate_registration_begin_date.' '.$request->candidate_registration_begin_time;
+                $newElection->candidate_registragion_end=$request->candidate_registration_end_date.' '.$request->candidate_registration_end_time;
+                $newElection->election_begin=$request->election_begin_date.' '.$request->election_begin_time;
+                $newElection->election_end=$request->election_end_date.' '.$request->election_end_time;
                 $newElection->save();
 
                 return redirect(route('admin.showStartPage', ['message'=>57]));
