@@ -395,10 +395,10 @@ class AdminController extends Controller
                         $election = Election::where('id',$request->electionid)->first();
                         $election->name=$request->e_name;
                         $election->description=$request->e_description;
-                        $election->candidate_registration_begin=$request->e_candidate_registration_begin;
-                        $election->candidate_registration_end=$request->e_candidate_registration_end;
-                        $election->election_begin=$request->e_election_begin;
-                        $election->election_end=$request->e_election_end;
+                        $election->candidate_registration_begin=$request->e_candidate_registration_begin_date.' '.$request->e_candidate_registration_begin_time;
+	                $election->candidate_registration_end=$request->e_candidate_registration_end_date.' '.$request->e_candidate_registration_end_time;
+	                $election->election_begin=$request->e_election_begin_date.' '.$request->e_election_begin_time;
+        	        $election->election_end=$request->e_election_end_date.' '.$request->e_election_end_time;
                         $election->type=$request->e_type;
                         $election->save();
                 

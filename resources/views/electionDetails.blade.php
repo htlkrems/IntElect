@@ -5,6 +5,7 @@
 			<title>.:: IntElect - {{$election->name}} ::.</title>
 			<script>
 				$(document).ready(function(){
+				$('.timepicker').pickatime({'twelvehour': false});
     				$('ul.tabs').tabs();
     				 $('.modal').modal();
     				$('.datepicker').pickadate({
@@ -169,13 +170,15 @@
                     					<div class="row">
                         					<div class="input-field col s12">
                         						<h5>Registrierungszeit</h5>
-                            					<input type="text" class="datepicker" id="crb" name="e_candidate_registration_begin" value="{{$election->candidate_registration_begin}}" placeholder="Von: ">
-                            					<input type="text" class="datepicker" id="cre" name="e_candidate_registration_end" value="{{$election->candidate_registration_end}}" placeholder="Bis: ">
+									<h5 class="col s2">Von</h5> <input type="text" class="datepicker col s4" id="crb" name="e_candidate_registration_begin_date" value="{{ substr($election->candidate_registration_begin, 0, 10) }}" placeholder="Von: "> <h5 class="col s2">um</h5> <input placeholder="Uhrzeit" type="text" value="{{ substr($election->candidate_registration_begin, 11, 8) }}" class="timepicker col s4" name="e_candidate_registration_begin_time" required>
+									<h5 class="col s2">Bis</h5> <input type="text" class="datepicker col s4" id="crb" name="e_candidate_registration_end_date" value="{{ substr($election->candidate_registration_end, 0, 10) }}" placeholder="Von: "> <h5 class="col s2">um</h5> <input placeholder="Uhrzeit" type="text" value="{{ substr($election->candidate_registration_end, 11, 8) }}" class="timepicker col s4" name="e_candidate_registration_end_time" required>
                             				</div>
 			    						<div class="input-field col s12">
 			    							<h5>Wahlzeit</h5>
-                            					<input type="text" class="datepicker" id="eb" name="e_election_begin" value="{{$election->election_begin}}" placeholder="Von: ">
-                            					<input type="text" class="datepicker" id="ee" name="e_election_end" value="{{$election->election_end}}" placeholder="Bis: ">
+								<h5 class="col s2">Von</h5> <input type="text" class="datepicker col s4" id="crb" name="e_election_begin_date" value="{{ substr($election->election_begin, 0, 10) }}" placeholder="Von: "> <h5 class="col s2">um</h5> <input placeholder="Uhrzeit" type="text" value="{{ substr($election->election_begin, 11, 8) }}" class="timepicker col s4" name="e_election_begin_time" required>
+                            					<h5 class="col s2">Bis</h5> <input type="text" class="datepicker col s4" id="crb" name="e_election_end_date" value="{{ substr($election->election_end, 0, 10) }}" placeholder="Von: "> <h5 class="col s2">um</h5> <input placeholder="Uhrzeit" type="text" value="{{ substr($election->election_end, 11, 8) }}" class="timepicker col s4" name="e_election_end_time" required>
+<!--								<input type="text" class="datepicker" id="eb" name="e_election_begin" value="{{$election->election_begin}}" placeholder="Von: ">
+                            					<input type="text" class="datepicker" id="ee" name="e_election_end" value="{{$election->election_end}}" placeholder="Bis: "> -->
                         				</div>
 		   								<div class="row">
 					                        <div class="input-field col s12">
