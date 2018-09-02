@@ -36,7 +36,8 @@ class HomeController extends Controller{
   }
   //Shows the Register page.
   public function showRegister(Request $request) {
-      $runningelections=DB::table('election')->where([ ['candidate_registration_begin','<',date('Y-m-d H:i:s')], ['candidate_registration_end', '>', date('Y-m-d H:i:s')]])->orWhereNull('candidate_registration_end')->get();
+	$runningelections=DB::select('SELECT * from election where (candidate_registration_begin < NOW() AND candidate_registration_end > NOW()) or candidate_registration_end = null;');
+        //$runningelections=DB::table('election')->where([ ['candidate_registration_begin','<',date('Y-m-d H:i:s')], ['candidate_registration_end', '>', date('Y-m-d H:i:s')]])->orWhereNull('candidate_registration_end')->get();
         return view('registerpage', ['elections'=>$runningelections, 'message' => $request->message]);
   }
   //Writes the Registration information into the database
