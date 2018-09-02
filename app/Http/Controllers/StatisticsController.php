@@ -109,7 +109,7 @@ class StatisticsController extends Controller
         PDF::setPrintHeader(false);
         PDF::setPrintFooter(false);
 
-        PDF::AddPage();
+        PDF::AddPage('L','A4');
         PDF::SetFont('times', 14);
         PDF::SetAutoPageBreak(true, 0);
 

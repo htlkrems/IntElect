@@ -34,9 +34,13 @@
 					echo "<td>".$overallpoints."</td>";
 					echo "</tr>";
 				}
-				echo "<tr><td></td></tr><tr><td></td></tr>";
-				echo "<tr>";
-				echo "<td><b>Gültige Stimmen</b></td>";
+				echo "</table><h1>Gültige Stimmen</h1>";?><table border="1"><?php
+				echo "<tr><td><b>Gültige Stimmen</b></td>";
+				foreach($electiongroups as $electiongroup){
+					echo "<td>".$electiongroup->name."</td>";
+				}
+				echo "<td>Gesamt</td></tr><tr>";
+				echo "<td>Anzahl</td>";
 				$overallvalidvotes=0;
 				foreach($electiongroups as $electiongroup){
 					foreach ($validVotesPerGroup as $validVotes) {
@@ -51,7 +55,11 @@
 				echo "<td>".$overallvalidvotes."</td>";
 				echo "</tr>";
 				if($election->type==1){
-				echo "<tr><td></td></tr><tr><td><b>Anzahl der 6er Punkte</b></td></tr>";
+				echo "</table>";?><h1>Anzahl der 6er Punkte</h1><table border="1"><?php echo "<tr><td><b>Anzahl der 6er Punkte</b></td>";
+				foreach($electiongroups as $electiongroup){
+					echo "<td>".$electiongroup->name."</td>";
+				}
+				echo "<td>Gesamt</td></tr>";
 				foreach ($candidates as $candidate) {
 					echo "<tr>";
 					echo "<td>".$candidate->name." ".$candidate->party."</td>";
@@ -73,15 +81,13 @@
 				}}
 			?>
 	</table>
-
+	<h1>Rollenverteilung</h1>
 	<?php 
 	$titles = array(0=>'Schulsprecher', 1=>'1. Stellvertreter des Schulsprechers', 2=>'2. Stellvertreter des Schulsprechers', 3=>'1. Stellvertreter für den SGA', 4=>'2. Stellvertreter für den SGA', 5=>'3. Stellvertreter für den SGA', 6=>'4. Stellvertreter für den SGA');
 	$counter=0;
-	foreach ($winners as $winner) {
-
-		echo "<p>".$titles[$counter]." :";
-
-		foreach ($candidates as $candidate) {
+	foreach ($candidates as $candidate) {
+		echo "<p><b>".$titles[$counter].":</b> ";
+		foreach ($winners as $winner) {
 			if($candidate->id==$winner->can_id){
 				echo $candidate->name." ".$candidate->party;
 			}

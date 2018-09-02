@@ -60,22 +60,13 @@
                                 foreach ($unverifiedcandidates as $ucandidate) {
                                     ?>
                                     <li class="collection-item">
-                                        <p class="col s4">
-                                            {{$ucandidate->cname}}, {{$ucandidate->cparty}}
-                                        </p>
-                                        <p class="col s6">
-                                            {{$ucandidate->ename}}
-                                        </p>
-                                        <p class="col s1">
-                                            <a href=<?php echo route('admin.verifyUser',['id'=>$ucandidate->cid]);?> style="color: black;">
+                                            {{$ucandidate->cname}}, {{$ucandidate->cparty}} - {{$ucandidate->ename}}
+                                            <a href=<?php echo route('admin.verifyUser',['id'=>$ucandidate->cid]);?> style="color: black;float: right;">
                                                 <i class="small material-icons">check</i>
                                             </a>
-                                        </p>
-                                        <p class="col s1">
-                                             <a href=<?php echo route('admin.denyCandidate',['id'=>$ucandidate->cid]);?> style="color: black;">
+                                             <a href=<?php echo route('admin.denyCandidate',['id'=>$ucandidate->cid]);?> style="color: black;float: right;">
                                                 <i class="small material-icons">clear</i>
                                             </a>
-                                        </p>
                                     </li>
                                     <?php
                                 }
@@ -89,19 +80,13 @@
                                 foreach ($closedelections as $ce) {
                                     ?>
                                     <li class="collection-item">
-                                        <p class="col s10">
                                             #{{$ce->id}} {{$ce->name}}
-                                        </p>
-                                        <p class="col s1">
-                                            <a href=<?php echo route('Statistics.showChart', ['election_id'=>$ce->id]);?> style="color: black;">
+                                            <a href=<?php echo route('Statistics.showChart', ['election_id'=>$ce->id]);?> style="color: black; float: right;">
                                                 <i class="small material-icons">assessment</i>
                                             </a>
-                                        </p>
-                                        <p class="col s1">
-                                             <a href=<?php echo route('Statistics.generateReport', ['election_id'=>$ce->id]);?> style="color: black;">
+                                             <a href=<?php echo route('Statistics.generateReport', ['election_id'=>$ce->id]);?> style="color: black;float: right;">
                                                 <i class="small material-icons">share</i>
                                             </a>
-                                        </p>
                                     </li>
                                     <?php
                                 }
