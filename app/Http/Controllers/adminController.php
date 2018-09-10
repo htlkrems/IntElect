@@ -415,11 +415,12 @@ class AdminController extends Controller
 	if(Session::has('role')) {
             if (Session::get('role') == 1) {
 				if(!validateInputs([ $request->c_name, $request->c_party ])) { return redirect(route('admin.showElectionEdit', ['eId'=>$request->electionid, 'message' => 1])); }
-				$candidate=Candidate::find('election_id',$request->electionid);
+				$candidate=Candidate::find($request->candidate_id);
 				$candidate->name=$request->c_name;
 				$candidate->party=$request->c_party;
 				$candidate->save();
-				return redirect(route('admin.showElectionEdit', ['eId'=>$request->electionid, 'message' => 58]));
+				//return redirect(route('admin.showElectionEdit', ['eId'=>$request->election_id, 'message' => 58]));
+				return redirect(route('admin.showElectionEdit',['eId'=>$request->election_id, 'message'=>58]));
 				}
 		}
 		return redirect(route('Home.showLogin', ['message' => 3]));

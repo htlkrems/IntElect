@@ -122,7 +122,8 @@
 									<div class="row">
 									<form method="post" action="{{route('Admin.editElectionCandidate')}}" onsubmit="return validateform()">
 										<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
-	    								<input type="hidden" name="candidateid" value="{{$candidate->id}}">
+	    								<input type="hidden" name="candidate_id" value="{{$candidate->id}}">
+									<input type="hidden" name="election_id" value="{{$election->id}}">
 										<td><div class="input-field">
 					                            <label for="c_name">Name</label>
 					                            <input type="text" class="validate tovalidate" name="c_name" required="" id="c_name" value="{{$candidate->name}}">
