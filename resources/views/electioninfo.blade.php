@@ -29,8 +29,8 @@
 	<?php 
           if(!is_null($candidate->picture)){
             ?>
-            <div class="card-image">
-              <img src="{{ url('/') }}/{{$candidate->picture}}">
+            <div class="card-image" style="height: 180px; box-shadow: 0 4px 5px -5px gray">
+              <img style="max-height: 100%; max-width: 100%; width: auto; height: auto; margin: auto;" src="{{ url('/') }}/{{$candidate->picture}}">
             </div>
             <?php
           }
