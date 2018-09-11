@@ -36,7 +36,7 @@
       <div class="card teal darken-1 small">
         <div class="card-content white-text">
           <span class="card-title">Aktuelle Wahlen</span>
-          <p>Aufgrund der Tatsache, dass bestimmte Wahlen noch nicht abgescchlossen wurden, können nur generelle Informationen zu diesen Wahlen bekannt gegeben werden. </p>
+          <p>Aufgrund der Tatsache, dass bestimmte Wahlen noch nicht abgeschlossen wurden, können nur generelle Informationen zu diesen Wahlen bekannt gegeben werden. </p>
         </div>
         <div class="card-action">
           <a href="statistics/showRunningElections">Aktuelle Wahlen einsehen</a>
