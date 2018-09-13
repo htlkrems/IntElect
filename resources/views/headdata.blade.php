@@ -5,6 +5,7 @@
 <link rel="icon" type="image/svg+xml" href="{{asset('favicon.svg')}}" sizes="any">
 <script type="text/javascript" src="{{asset('js/validation.js')}}"></script>
 <meta name="viewport" content="width=device-width, initial-scale=0.8"/>
+<link rel="stylesheet" href="{{asset('css/custom.css')}}">
 <script>
 $(document).ready(function(){
 var message=<?php if(isset($message)) {echo $message;} ?>;

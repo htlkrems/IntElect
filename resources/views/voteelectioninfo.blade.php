@@ -8,7 +8,7 @@
 
 <body>
 @include('mainnav')
-<div class="container">
+<main class="container">
   <div class="row">
     <div class="col s12">
         <h4>{{$election->name}}</h4><br> 
@@ -61,6 +61,7 @@
   <center>
     <a class="waves-effect waves-light btn" href=<?php echo route('Vote.showVotingMask',['electionid'=>$election->id]);?>>Zum Wahlvorgang</a>
   </center>
-</div>
+</main>
+@include('footer')
 </body>
 </html>

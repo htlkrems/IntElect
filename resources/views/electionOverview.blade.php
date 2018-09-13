@@ -5,7 +5,7 @@
 </head>
 <body>
 @include('adminnav')
-<div class="container">
+<main class="container">
 	<div class="row">
     	<div class="col l12 m12 s12">
      		<div class="row valign-wrapper"><div class="col s10"><h3>Aktuelle Wahlen </h3></div>
@@ -83,6 +83,7 @@
         	?>
 		</div>
 	</div>
-</div>
+</main>
+@include('footer')
 </body>
 </html>

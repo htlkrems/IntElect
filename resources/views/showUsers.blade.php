@@ -6,7 +6,7 @@
 </head>
 <body>
 @include('adminnav')
-<div class="container">
+<main class="container">
 <div class="row valign-wrapper">
   <div class="col s10">
     <h3>Benutzer</h3>
@@ -42,7 +42,8 @@
                                                 </tbody>
                                 </table>
     </div>
-</div>
+</main>
+@include('footer')
 <!-- <script>
 $(document).ready(function(){
 var message=<?php if(isset($message)) {echo $message;} ?>;

@@ -11,7 +11,7 @@
 		</head>
 		<body>
 			@include('adminnav')
-			<div class="container">
+			<main class="container">
 				<h2>
 					{{$user->username}} bearbeiten
 				</h2>
@@ -41,6 +41,7 @@
         				</div>
 					</div>
 				</form>
-			</div>
+			</main>
+			@include('footer')
 		</body>
 	</html>

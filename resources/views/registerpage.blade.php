@@ -10,7 +10,7 @@
 </head>
 <body>
    @include('mainnav')
-<div class="container">
+<main class="container">
     <div class="row">
         <h4>Als Kandidat registrieren</h4>
         <div class="divider"></div>
@@ -68,6 +68,7 @@
 </div>
 </form>
 </div>
-</div>
+</main>
+@include('footer')
 </body>
 </html>

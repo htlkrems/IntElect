@@ -5,7 +5,7 @@
 	</head>
 	<body>
 		@include('adminnav')
-		<div class="container">
+		<main class="container">
 		    <div class="row">
 		    	<div class="col s12">
 		    		<h3 class="col s11">Wahlgruppen</h3>
@@ -56,6 +56,7 @@
 		    		</table>
 		    	</div>
 			</div>
-		</div>
+		</main>
+		@include('footer')
 	</body>
 </html>
