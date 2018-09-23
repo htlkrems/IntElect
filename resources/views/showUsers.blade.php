@@ -11,11 +11,12 @@
   <div class="col s10">
     <h3>Benutzer</h3>
   </div>
-  <div class="col s2 valign"> <a href="{{route('admin.showUserCreate')}}" class="btn-floating btn-large red">
-        <i class="large material-icons">add</i>
-    </a> </div>
+  <div class="col s2 valign"> <a href="{{route('admin.showUserCreate')}}" style="color: black;float: right;">
+        <i class="material-icons">add_circle</i>
+    </a> 
 </div>
-	<table class="highlight">
+</div>
+    <table class="highlight">
                                                 <thead>
                                                         <th>Username</th>
                                                         <th>Rolle</th>
@@ -31,8 +32,8 @@
                                                                                 <td><?php if($user->type==1){echo "Administrator";}else {echo "Wahlgruppenleiter";} ?></td>
                                                                                 <td>{{$user->election_groups}}</td>
                                                                                 <td>
-                                                                                        <a href="{{route('Admin.showUsersEdit', ['id' => $user->id])}}" class="btn-floating btn-medium red"><i class="large material-icons">edit</i></a>
-											<a href="{{route('admin.deleteUser', ['id' => $user->id])}}" class="btn-floating btn-medium red"><i class="large material-icons">delete</i></a>
+                                                                                        <a href="{{route('Admin.showUsersEdit', ['id' => $user->id])}}" style="color:black;"><i class="material-icons">edit</i></a>
+                                            <a href="{{route('admin.deleteUser', ['id' => $user->id])}}" style="color:black;"><i class="material-icons">delete</i></a>
                                                                                 </td>
                                                                         </tr>
                                                                         <?php
