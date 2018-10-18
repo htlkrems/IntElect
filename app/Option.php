@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Opinion extends Model
+class Option extends Model
 {
 	protected $table='opinion';
 	protected $primarykey = 'id';
