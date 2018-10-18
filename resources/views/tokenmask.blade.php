@@ -6,7 +6,7 @@
 </head>
 <body>
 @include('mainnav')
-    <div class="container">
+    <main class="container">
       <div class="row valign-wrapper">
         <div class="col s12 m8 offset-m2 valign">
           <div class="card hoverable center-align">
@@ -21,6 +21,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </main>
+    @include('footer')
   </body>
 </html>

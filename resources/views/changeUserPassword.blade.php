@@ -6,7 +6,7 @@
         </head>
         <body>
             @include('mainnav')
-            <div class="container">
+            <main class="container">
                 <div class="container">
                 <div class="row">
                     <h2>
@@ -39,7 +39,8 @@
                     </form>
                 </div>
             </div>
-        </div>
+        </main>
+	@include('footer')
         </body>
     </html>
         

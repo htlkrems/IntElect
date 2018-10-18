@@ -8,7 +8,7 @@
 
 <body>
   @include('mainnav')
-  <div class="container">
+  <main class="container">
       <div class="row">
         <?php 
       foreach ($elections as $election) {
@@ -51,6 +51,7 @@
         <?php
       }}}}?>
       </div>
-  </div>
+  </main>
+  @include('footer')
 </body>
 </html>

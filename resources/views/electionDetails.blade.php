@@ -22,7 +22,7 @@
 		</head>
 		<body>
 			@include('adminnav')
-			<div class="container">
+			<main class="container">
 				<div class="row">
 					<h3>Wahldetails: {{$election->name}}</h3>
 					<div class="col s12">
@@ -218,6 +218,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+			</main>
+			@include('footer')
 		</body>
 	</html>

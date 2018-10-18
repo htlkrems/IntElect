@@ -23,7 +23,7 @@
 </head>
 <body>
 @include('mainnav')
-  <div class="container">
+  <main class="container">
     <div class="row">
       <form class="col s12" method="post" action="{{route('Vote.elect')}}" enctype="multipart/form-data" onsubmit="return validateform()">
         <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
@@ -70,6 +70,7 @@
       <center><button class="btn waves-effect waves-light" type="submit" name="action">Absenden</button></center>
     </form>
   </div>
-</div>
+</main>
+@include('footer')
 </body>
 </html>

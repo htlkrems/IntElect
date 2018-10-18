@@ -6,9 +6,9 @@
    <title>.:: IntElect - Startseite ::.</title>
 </head>
 
-<body>
+<body style="display: flex; min-height: 100vh;  flex-direction: column;">
     @include('mainnav')
-<div class="container">
+<main class="container" style="flex: 1 0 auto;">
   <div class="row">
     <div class="col s12 m4">
       <div class="card teal darken-1 small">
@@ -45,6 +45,7 @@
     </div>
     </div>
   </div>
-</div>
+</main>
+@include('footer')
 </body>
 </html>
