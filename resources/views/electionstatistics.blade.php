@@ -9,7 +9,7 @@
 
 <body>
 @include('mainnav')
-<div class="container">
+<main class="container">
   <div class="row">
     <div class="col s12">
       <div class="chart-container responsive">
@@ -60,8 +60,8 @@
     </div>
     </div>
   </div>
-</div>
-
+</main>
+@include('footer')
 <script>
 $(document).ready(function(){
 var names = [];

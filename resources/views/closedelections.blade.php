@@ -5,7 +5,7 @@
 </head>
 <body>
 @include('mainnav')
-  <div class="container">
+  <main class="container">
     <div class="row">
     <div class="col s12">
      <h4>Vergangene Wahlen</h4><br>
@@ -29,6 +29,7 @@
      ?>
     </div>
   </div>
-  </div>
+  </main>
+  @include('footer')
 </body>
 </html>

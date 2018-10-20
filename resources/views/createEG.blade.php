@@ -5,7 +5,7 @@
 </head>
 <body>
 @include('adminnav')
-  <div class="container">
+  <main class="container">
     <div class="row">
         <h4>Wahlgruppe erstellen: </h4>
         <div class="divider"></div>
@@ -37,6 +37,7 @@
             <button class="btn waves-effect waves-light" type="submit" name="action">Erstellen</button>
 		</form>
     </div>
-</div>
+</main>
+@include('footer')
 </body>
 </html>

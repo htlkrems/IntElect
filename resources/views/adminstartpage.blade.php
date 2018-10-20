@@ -11,7 +11,7 @@
         </head>
         <body>
             @include('adminnav')
-            <div class="container">
+            <main class="container">
                 <div class="row">
                     <div class="col s12">
                         <div class="row">
@@ -96,6 +96,7 @@
                     </div>
                     </div>
                 </div>
-            </div>
+            </main>
+	    @include('footer')
         </body>
     </html>
