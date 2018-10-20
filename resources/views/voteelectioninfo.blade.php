@@ -29,6 +29,10 @@
           }
 
         ?>
+	<p>
+		Eine Stimme ist ungültig, wenn die notwendigen Punkte nicht vergeben wurden (in diesem Fall 2er und 1er Punkte). 
+		Des Weiteren ist eine Stimme nicht gültig, falls eine manipulierte Stimme vorliegt. Darüber hinaus kann eine Stimme nur als gültig gezählt werden, wenn die Stimmenvergabe korrekt abgelaufen ist.
+	</p>
     </div>
     <div class="col s12">
      <h4>Aufgestellte Kandidaten</h4><br>

@@ -47,15 +47,10 @@
                 echo "<select class='tovalidate' name=\"votes[$candidate->id]\">";
                 ?>
                 <option value="0" selected="true">0</option>
-                
                 <option value="1">1</option>
                 <?php                 
                   if($election->type==1){?>
                 <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-                <option value="6">6</option>
                 <?php 
                 }
                 ?>

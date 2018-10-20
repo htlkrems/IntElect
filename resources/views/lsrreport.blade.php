@@ -55,7 +55,7 @@
 				echo "<td>".$overallvalidvotes."</td>";
 				echo "</tr>";
 				if($election->type==1){
-				echo "</table>";?><h1>Anzahl der 6er Punkte</h1><table border="1"><?php echo "<tr><td><b>Anzahl der 6er Punkte</b></td>";
+				echo "</table>";?><h1>Anzahl der 6er Punkte</h1><table border="1"><?php echo "<tr><td><b>Anzahl der 2er Punkte</b></td>";
 				foreach($electiongroups as $electiongroup){
 					echo "<td>".$electiongroup->name."</td>";
 				}

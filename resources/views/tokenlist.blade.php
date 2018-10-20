@@ -13,11 +13,12 @@
 		$count=0;
 		foreach ($tokens as $token) {
 			echo "<tr><td>";
+			echo "<br><br>";
 			echo "Code eingeben unter ".Request::root()."/vote <br>";
-			echo "<strong>".$token->token."</strong>";
+			echo "<strong>".$token->token."</strong><br>";
 			echo "</td></tr>";
 			$count++;
-			if($count>=24){
+			if($count>=12){
 				$count=0;
 				echo "<br><br><br><br><br>";
 			}
