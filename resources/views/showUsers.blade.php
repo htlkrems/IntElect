@@ -5,7 +5,7 @@
     <title>.:: IntElect - Benutzer ::.</title>
 </head>
 <body>
-@include('adminnav')
+@include('mainnav')
 <main class="container">
 <div class="row valign-wrapper">
   <div class="col s10">

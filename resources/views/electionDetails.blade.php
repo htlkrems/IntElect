@@ -21,7 +21,7 @@
 			</script>
 		</head>
 		<body>
-			@include('adminnav')
+			@include('mainnav')
 			<main class="container">
 				<div class="row">
 					<h3>Wahldetails: {{$election->name}}</h3>

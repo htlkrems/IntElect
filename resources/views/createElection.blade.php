@@ -4,7 +4,7 @@
 <title>.:: IntElect - Wahl erstellen ::.</title>
 </head>
 <body>
-@include('adminnav')
+@include('mainnav')
   <main class="container">
     <div class="row">
         <h4>Neue Wahl erstellen</h4>

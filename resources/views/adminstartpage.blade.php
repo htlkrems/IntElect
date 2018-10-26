@@ -10,7 +10,7 @@
             </style>
         </head>
         <body>
-            @include('adminnav')
+            @include('mainnav')
             <main class="container">
                 <div class="row">
                     <div class="col s12">
