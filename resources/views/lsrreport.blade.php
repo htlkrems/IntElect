@@ -84,7 +84,7 @@
 				}
 				echo "</table>";
 				?>
-					<p>Als Schulsprecher ist gewählt, wer auf größer 50% der vergebenen Stimmen 6er-Punkte erhalten hat. Das wären in diesem Fall <?php  echo $all6points/2;?> 6er-Stimmen.</p>
+					<p>Als Schulsprecher ist gewählt, wer auf größer 50% der vergebenen Stimmen 6er-Punkte erhalten hat. Das wären in diesem Fall <?php  echo round($all6points/2);?> 6er-Stimmen.</p>
 					<?php
 			}elseif ($election->type==2) {
 					
@@ -116,7 +116,7 @@
 				}
 				echo "</table>";
 				?>
-					<p>Als Abteilungssprecher ist gewählt, wer auf größer 50% der vergebenen Stimmen 2er-Punkte erhalten hat. Das wären in diesem Fall <?php  echo $all6points/2;?> 2er-Stimmen.</p>
+					<p>Als Abteilungssprecher ist gewählt, wer auf größer 50% der vergebenen Stimmen 2er-Punkte erhalten hat. Das wären in diesem Fall <?php  echo round($all6points/2);?> 2er-Stimmen.</p>
 					<?php
 				}elseif ($election->type==3) {
 				?><h1>Anzahl der 2er Punkte</h1><table border="1"><?php echo "<tr><td><b>Anzahl der 2er Punkte</b></td>";
@@ -147,15 +147,20 @@
 				}
 				echo "</table>";
 					?>
-					<p>Als Klassensprecher ist gewählt, wer auf größer 50% der vergebenen Stimmen 2er-Punkte erhalten hat. Das wären in diesem Fall <?php  echo $all6points/2;?> 2er-Stimmen.</p>
+					<p>Als Klassensprecher ist gewählt, wer auf größer 50% der vergebenen Stimmen 2er-Punkte erhalten hat. Das wären in diesem Fall <?php  echo round($all6points/2);?> 2er-Stimmen.</p>
 					<?php
 				}
 			?>
 	<h1>Rollenverteilung</h1>
 	<?php 
-	$titles = array(0=>'Schulsprecher', 1=>'1. Stellvertreter des Schulsprechers', 2=>'2. Stellvertreter des Schulsprechers', 3=>'1. Stellvertreter für den SGA', 4=>'2. Stellvertreter für den SGA', 5=>'3. Stellvertreter für den SGA', 6=>'4. Stellvertreter für den SGA');
+	$titles1 = array(0=>'Schulsprecher', 1=>'1. Stellvertreter des Schulsprechers', 2=>'2. Stellvertreter des Schulsprechers', 3=>'1. Stellvertreter für den SGA', 4=>'2. Stellvertreter für den SGA', 5=>'3. Stellvertreter für den SGA', 6=>'4. Stellvertreter für den SGA');
 	$titles2=array(0=>'Abteilungssprecher', 1=>'Abteilungssprecher-Stellvertreter');
 	$titles3=array(0=>'Klassensprecher',1=>'Klassensprecher-Stellvertreter');
+	switch($election->type){
+		case 1: $titles=$titles1; break;
+		case 2: $titles=$titles2; break;
+		case 3: $titles=$titles3; break;
+	}
 	$counter=0;
 	foreach ($winners as $winner) {
 		echo "<p><b>".$titles[$counter].":</b> ";
