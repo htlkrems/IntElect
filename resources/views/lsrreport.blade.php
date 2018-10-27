@@ -147,7 +147,7 @@
 				}
 				echo "</table>";
 					?>
-					<p>Als Klassensprecher ist gewählt, wer auf größer 50% der vergebenen Stimmen 2er-Punkte erhalten hat. Das wären in diesem Fall <?php  echo round($all6points/2);?> 2er-Stimmen.</p>
+					<p>Als Klassensprecher ist gewählt, wer auf größer 50% der vergebenen Stimmen 2er-Punkte erhalten hat. Das wären in diesem Fall <?php  echo $all6points/2;?> 2er-Stimmen.</p>
 					<?php
 				}
 			?>
@@ -157,9 +157,9 @@
 	$titles2=array(0=>'Abteilungssprecher', 1=>'Abteilungssprecher-Stellvertreter');
 	$titles3=array(0=>'Klassensprecher',1=>'Klassensprecher-Stellvertreter');
 	$counter=0;
-	foreach ($candidates as $candidate) {
+	foreach ($winners as $winner) {
 		echo "<p><b>".$titles[$counter].":</b> ";
-		foreach ($winners as $winner) {
+		foreach ($candidates as $candidate) {
 			if($candidate->id==$winner->can_id){
 				echo $candidate->name." ".$candidate->party;
 			}
