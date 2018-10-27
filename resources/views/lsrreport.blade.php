@@ -147,7 +147,7 @@
 				}
 				echo "</table>";
 					?>
-					<p>Als Klassensprecher ist gewählt, wer auf größer 50% der vergebenen Stimmen 2er-Punkte erhalten hat. Das wären in diesem Fall <?php  echo $all6points/2;?> 2er-Stimmen.</p>
+					<p>Als Klassensprecher ist gewählt, wer auf größer 50% der vergebenen Stimmen 2er-Punkte erhalten hat. Das wären in diesem Fall <?php  echo round($all6points/2);?> 2er-Stimmen.</p>
 					<?php
 				}
 			?>
