@@ -184,31 +184,82 @@
 		   								<div class="row">
 					                        <div class="input-field col s12">
 					                            <h5><i class="material-icons">settings</i> Wahlsystem</h5>
-					                            <?php 
+<?php 
 					                            	if($election->type==1){
 					                            		?>
-					                            			<p>
-								                                <input name="e_type" class='tovalidate' type="radio" id="type_id1" value="1" checked="true" />
-								                                 <label for="type_id1" style="color: #000000">Punktesystem</label>
-					                            			</p>
-								                            <p>
-								                                <input name="e_type" type="radio" class='tovalidate' id="type_id2" value="0" />
-								                                <label for="type_id2" style="color: #000000">Kreuzsystem</label>
-								                            </p>
+                            <p>
+                                <input name="e_type" class='tovalidate' type="radio" id="type_id1" value="0"/>
+                                 <label for="type_id1" class='tovalidate' style="color: #000000">Kreuzsystem</label>
+                            </p>
+                            <p>
+                                <input name="e_type" type="radio" id="type_id2" value="1" checked="true" />
+                                <label for="type_id2" style="color: #000000">Schulsprecherwahl</label>
+                            </p>
+                            <p>
+                                <input name="e_type" type="radio" id="type_id3" value="2" />
+                                <label for="type_id3" style="color: #000000">Abteilungssprecherwahl</label>
+                            </p>
+                            <p>
+                                <input name="e_type" type="radio" id="type_id4" value="3" />
+                                <label for="type_id4" style="color: #000000">Klassensprecherwahl</label>
+                            </p>
 					                            		<?php
-					                            	} else {
+					                            	} elseif ($election->type==0) {
 					                            		?>
-					                            			<p>
-								                                <input name="e_type" type="radio" class='tovalidate' id="type_id1" value="1" />
-								                                 <label for="type_id1" style="color: #000000">Punktesystem</label>
-					                            			</p>
-								                            <p>
-								                                <input name="e_type" type="radio" class='tovalidate' id="type_id2" value="0" checked="true" />
-								                                <label for="type_id2" style="color: #000000">Kreuzsystem</label>
-								                            </p>
+					                            			 <p>
+                                <input name="e_type" class='tovalidate' type="radio" id="type_id1" value="0" checked="true" />
+                                 <label for="type_id1" class='tovalidate' style="color: #000000">Kreuzsystem</label>
+                            </p>
+                            <p>
+                                <input name="e_type" type="radio" id="type_id2" value="1"/>
+                                <label for="type_id2" style="color: #000000">Schulsprecherwahl</label>
+                            </p>
+                            <p>
+                                <input name="e_type" type="radio" id="type_id3" value="2" />
+                                <label for="type_id3" style="color: #000000">Abteilungssprecherwahl</label>
+                            </p>
+                            <p>
+                                <input name="e_type" type="radio" id="type_id4" value="3" />
+                                <label for="type_id4" style="color: #000000">Klassensprecherwahl</label>
+                            </p>
 					                            		<?php
-					                            	}
+					                            	} elseif ($election->type==2) {
+					                            	?>	 <p>
+                                <input name="e_type" class='tovalidate' type="radio" id="type_id1" value="0"/>
+                                 <label for="type_id1" class='tovalidate' style="color: #000000">Kreuzsystem</label>
+                            </p>
+                            <p>
+                                <input name="e_type" type="radio" id="type_id2" value="1"/>
+                                <label for="type_id2" style="color: #000000">Schulsprecherwahl</label>
+                            </p>
+                            <p>
+                                <input name="e_type" type="radio" id="type_id3" value="2" checked="true" />
+                                <label for="type_id3" style="color: #000000">Abteilungssprecherwahl</label>
+                            </p>
+                            <p>
+                                <input name="e_type" type="radio" id="type_id4" value="3" />
+                                <label for="type_id4" style="color: #000000">Klassensprecherwahl</label>
+                            </p><?php
+					                            	}else{
 					                            		?>
+					                            		<p>
+                                <input name="e_type" class='tovalidate' type="radio" id="type_id1" value="0"/>
+                                 <label for="type_id1" class='tovalidate' style="color: #000000">Kreuzsystem</label>
+                            </p>
+                            <p>
+                                <input name="e_type" type="radio" id="type_id2" value="1"/>
+                                <label for="type_id2" style="color: #000000">Schulsprecherwahl</label>
+                            </p>
+                            <p>
+                                <input name="e_type" type="radio" id="type_id3" value="2"/>
+                                <label for="type_id3" style="color: #000000">Abteilungssprecherwahl</label>
+                            </p>
+                            <p>
+                                <input name="e_type" type="radio" id="type_id4" value="3" checked="true" />
+                                <label for="type_id4" style="color: #000000">Klassensprecherwahl</label>
+                            </p>
+					                            		<?php 
+					                            	}?>
 					                        </div>
 		   								</div>
                     				</div>
