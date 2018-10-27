@@ -76,13 +76,21 @@ class StatisticsController extends Controller
                             ->where('token.valid_vote',1)
                             ->where('token.election_id',$request->election_id)
                             ->groupBy("election_group.id")->get();
+
+	//Get max points for election type
+	$maxPointsByType=1;
+	switch($election->type){
+		case 1: $maxPointsByType=6; break;
+		case 2: $maxPointsByType=2; break;
+		case 3: $maxPointsByType=2; break;
+	}
         //Get the amount of votes of an Election Group for a certain candidate with six points
         $voteResultssixPoints=DB::table('vote')
                     ->select(DB::raw('count(vote.id) AS sixpointscount, candidate.id AS can_id, election_group.id AS eleg_id'))
                     ->join('candidate','vote.candidate_id','=','candidate.id')
                     ->join('election_group','vote.election_group_id','=','election_group.id')
                     ->where('candidate.election_id',$request->election_id)
-                    ->where('vote.points',2)
+                    ->where('vote.points', $maxPointsByType)
                     ->groupBy("candidate.id","election_group.id")->get();
         if($election->type==0){
             //Get the amount of votes of an Election Group for a certain candidate with one point

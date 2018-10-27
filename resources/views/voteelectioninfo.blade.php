@@ -18,14 +18,23 @@
         <p><b>Ende der Wahl: </b>{{ date("d.m.Y H:i:s", strtotime($election->election_end)) }}</p>
         <p><b>Beschreibung: </b>{{ $election->description }}</p>
         <?php
-          if($election->type==1){
-            ?>
-              <p><b>Punktwahl:</b> Man kann verschiedenen Kandidaten unterschiedliche viele Punkte geben.</p>
+          switch($election->type){
+            case 0: ?>
+              <p><b>Kreuzsystem: </b> Nur eine Person kann gewählt werden! Man kann verschiedenen Kandidaten unterschiedliche viele Punkte geben.</p>
             <?php
-          } else {
-              ?>
-              <p><b>Kreuzsystem: </b>Nur eine Person kann gewählt werden!</p>
+		break;
+	    case 1: ?>
+              <p><b>Schulsprecherwahl: </b> Man kann Kandidaten eine underschiedliche Punkte zuteilen (1, 2, 3, 4, 5, 6).</p>
               <?php
+		break;
+	    case 2: ?>
+	      <p><b>Abteilungssprecherwahl: </b> Man kann Kandidaten eine underschiedliche Punkte zuteilen (1, 2).</p>
+	    <?php
+		break;
+	    case 3: ?>
+	     <p><b>Klassensprecherwahl: </b> Man kann Kandidaten eine underschiedliche Punkte zuteilen (1, 2).</p>
+	    <?php
+		break;
           }
 
         ?>
