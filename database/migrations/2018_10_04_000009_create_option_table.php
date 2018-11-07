@@ -6,7 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateOptionTable extends Migration {
     public function up() {
-        Schema::create('poll', function (Blueprint $table) {
+        Schema::create('option', function (Blueprint $table) {
             $table->engine = 'InnoDB';
             $table->collation = 'utf8_general_ci';
             $table->charset = 'utf8';

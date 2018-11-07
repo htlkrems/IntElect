@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Option extends Model
 {
-	protected $table='opinion';
+	protected $table='option';
 	protected $primarykey = 'id';
 	public $timestamps = false;
 	protected $dates = ['deleted_at'];
