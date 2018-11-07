@@ -10,7 +10,7 @@
 	      		</script>
 		</head>
 		<body>
-			@include('adminnav')
+			@include('mainnav')
 			<main class="container">
 				<h2>
 					{{$user->username}} bearbeiten

@@ -438,7 +438,7 @@ class AdminController extends Controller
 
                 $newElection->name=$request->name;
                 $newElection->description=$request->description;
-                $newElection->type=$request->type; // 1 = Punktesystem, 0 = Kreuzsystem
+                $newElection->type=$request->type; // 0 = Kreuzsystem, 1 = Schulsprecherwahl, 2 = Abteilungssprecherwahl, 3 = Klassensprecherwahl
 		$newElection->candidate_registration_begin=$request->candidate_registration_begin_date.' '.$request->candidate_registration_begin_time;
                 $newElection->candidate_registration_end=$request->candidate_registration_end_date.' '.$request->candidate_registration_end_time;
                 $newElection->election_begin=$request->election_begin_date.' '.$request->election_begin_time;

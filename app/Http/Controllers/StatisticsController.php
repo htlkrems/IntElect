@@ -41,7 +41,10 @@ class StatisticsController extends Controller
         //return View::make('statistics.showChart')->with('election', 1);
         $election=Election::findOrFail($request->electionId);
     	if($election->election_end == null || $election->election_end < date('Y-m-d H:i:s')) {
-    	        return view('electionstatistics', ['election' => $election, 'statistics' => DB::select('SELECT concat(ifnull(c.name, ""), ", ", ifnull(c.party, "")) AS "name", s.points FROM candidate c JOIN (SELECT sum(v.points) AS "points", c.id FROM election e JOIN candidate c on e.id= c.election_id JOIN vote v on v.candidate_id=c.id WHERE e.id=:id GROUP BY c.id) s ON c.id = s.id;', ['id' => $request->electionId])]);
+    	        return view('electionstatistics', ['election' => $election, 'statistics' => DB::select('SELECT concat(ifnull(c.name, ""), ", ", ifnull(c.party, "")) AS "name", s.points FROM candidate c JOIN (SELECT sum(v.points) AS "points", c.id FROM election e JOIN candidate c on e.id= c.election_id JOIN vote v on v.candidate_id=c.id WHERE e.id=:id GROUP BY c.id) s ON c.id = s.id;',['id' => $request->electionId]),
+    	        'statistics1' => DB::select('SELECT concat(ifnull(c.name, ""), ", ", ifnull(c.party, "")) AS "name", s.points FROM candidate c JOIN (SELECT count(v.points) AS "points", c.id FROM election e JOIN candidate c on e.id= c.election_id JOIN vote v on v.candidate_id=c.id WHERE e.id=:id AND v.points=1 GROUP BY c.id) s ON c.id = s.id;', ['id' => $request->electionId]),
+    	        'statistics2' => DB::select('SELECT concat(ifnull(c.name, ""), ", ", ifnull(c.party, "")) AS "name", s.points FROM candidate c JOIN (SELECT count(v.points) AS "points", c.id FROM election e JOIN candidate c on e.id= c.election_id JOIN vote v on v.candidate_id=c.id WHERE e.id=:id AND v.points=2 GROUP BY c.id) s ON c.id = s.id;',
+    	        ['id' => $request->electionId])]);
     	} else {
 		             return redirect(route('Statistics.showClosedElections', ['message' => 11]));
        	}
@@ -73,13 +76,21 @@ class StatisticsController extends Controller
                             ->where('token.valid_vote',1)
                             ->where('token.election_id',$request->election_id)
                             ->groupBy("election_group.id")->get();
+
+	//Get max points for election type
+	$maxPointsByType=1;
+	switch($election->type){
+		case 1: $maxPointsByType=6; break;
+		case 2: $maxPointsByType=2; break;
+		case 3: $maxPointsByType=2; break;
+	}
         //Get the amount of votes of an Election Group for a certain candidate with six points
         $voteResultssixPoints=DB::table('vote')
                     ->select(DB::raw('count(vote.id) AS sixpointscount, candidate.id AS can_id, election_group.id AS eleg_id'))
                     ->join('candidate','vote.candidate_id','=','candidate.id')
                     ->join('election_group','vote.election_group_id','=','election_group.id')
                     ->where('candidate.election_id',$request->election_id)
-                    ->where('vote.points',6)
+                    ->where('vote.points', $maxPointsByType)
                     ->groupBy("candidate.id","election_group.id")->get();
         if($election->type==0){
             //Get the amount of votes of an Election Group for a certain candidate with one point

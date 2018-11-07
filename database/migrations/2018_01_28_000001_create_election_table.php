@@ -13,7 +13,7 @@ class CreateElectionTable extends Migration {
             $table->increments('id');
             $table->string('name', 45)->nullable($value = false);
             $table->text('description')->nullable($value = true);
-            $table->boolean('type')->nullable($value = false);
+            $table->tinyInteger('type')->nullable($value = false);
             $table->dateTime('candidate_registration_begin')->nullable($value = true);
             $table->dateTime('candidate_registration_end')->nullable($value = true);
             $table->dateTime('election_begin')->nullable($value = true);

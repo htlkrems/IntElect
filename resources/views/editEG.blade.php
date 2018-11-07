@@ -4,7 +4,7 @@
     <title>.:: IntElect - Wahlgruppe bearbeiten ::.</title>
 </head>
 <body>
-@include('adminnav')
+@include('mainnav')
 <main class="container">
     <div class="row">
         <h4>Wahlgruppe bearbeiten: </h4>
