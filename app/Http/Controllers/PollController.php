@@ -35,7 +35,7 @@ class PollController extends Controller
         if(Session::has('role')){
             if(Session::get('role')==0){
 		$poll = DB::table('poll')->where('id', $request->poll_id)->first();
-		$options = DB::table('option')->where('poll_id', $request->poll_id)->get();
+		$options = DB::table('option')->where('poll_token', $request->poll_id)->get();
                 return view('updatepollview', ['poll' => $poll, 'options' => $options, 'message' => $request->message]);
             }
         }
@@ -147,23 +147,81 @@ class PollController extends Controller
 	    return view('waitingview', [ 'poll' => Poll::findOrFail($request->polltoken), 'message' => $request->message]);
 	} else {
 	    if($poll->begin < date('Y-m-d H:i:s') && $poll->end > date('Y-m-d H:i:s')) {
-        	return view('assessview', [ 'poll' => Poll::findOrFail($request->polltoken), 'message' => $request->message]);
+		$options = DB::table('option')->where('poll_token', $request->polltoken)->get();
+        	return view('assessview', [ 'poll' => $poll, 'options' => $options, 'message' => $request->message]);
 	    }
 	}
     }
 
-    public function inputPollTokenView(Request $request)
+    public function showInputPollTokenView(Request $request)
     {
         return view('inputpolltokenview', [ 'message' => $request->message]);
     }
 
-#    public function showJoinPollView(Request $request)
-#    {
-#        //check if Election Group Leader is logged in
-#        if(Session::has('role')){
-#            if(Session::get('role')==0){
-#                return view('joinpollview', [ 'poll' => Poll::findOrFail($request->polltoken), 'message' => $request->message]);
-#            }
-#        }
-#    }
+    // verifies the token
+    public function inputToken(Request $request){
+        try {
+            if(!validateInputs([ $request->token ])) { return redirect(route('Poll.showPollTokenView', ['message' => 1])); }
+            $token=$request->token;
+            $pollInDB=DB::table('poll')->where('token', $token)->first();
+	    if($pollInDB->current_participiants => $pollInDB->max_participants) { return redirect(route('Poll.showInputPollTokenView', ['message' => 0])); }
+	    DB::table('poll')->increment('current_participiants');
+
+	    //to check if the user already has voted
+            if($request->session()->exists('poll_token')){
+		$arr = $request->session()->put('poll_token');
+		if(in_array($pollInDB->token, $arr)) { return redirect(route('Poll.showInputPollTokenView', ['message' => 0])); }
+		array_push($arr, $pollInDB->token);
+		$request->session()->put('poll_token', $arr);
+	    } else {
+		$request->session()->put('poll_token', [ $pollInDB->token ]);
+	    }
+
+	   // $options = DB::table('option')->where('poll_token', $token)->get();
+            
+	    $return redirect(route('Poll.showAssessView',['polltoken'=>$token]));
+            }
+        catch (Exception $e) {
+            return redirect(route('Poll.showInputPollTokenView', ['message' => 4])); // token not in db
+        }
+    }
+
+    public function addPoints(Request $request)
+    {
+	try {
+            DB::beginTransaction();
+            foreach ($request->points as $point){
+	        DB::table('point')->insert(array('points' => $point->points, 'option_id' => $point->option_id) );
+            }
+
+	    DB::commit();
+            return redirect(route('startpage', ['message'=>0]));
+
+        } catch (Exception $e) {
+            DB::rollBack();
+            return parent::report($e);
+        }
+    }
+
+    public function showPollStatistics(Request $request)
+    {
+        //check if Election Group Leader is logged in
+        if(Session::has('role')){
+            if(Session::get('role')==0){
+		$statistics = DB::select('SELECT o.text, avg(p.points) FROM option o JOIN point p ON (o.id=p.option_id) WHERE o.poll_token=:token GROUP BY=o.id;', ['token' =>$request->polltoken]);
+
+                return view('pollstatistics', [ 'poll' => Poll::findOrFail($request->polltoken), 'statistics' => $statistics, 'message' => $request->message]);
+            }
+        }
+    }
+
+    public function showPollStatisticsOverview(Request $request)
+    {
+        //check if Election Group Leader is logged in
+        if(Session::has('role')){
+            if(Session::get('role')==0){
+                return view('pollstatisticsoverview', [ 'polls' => Poll::all(), 'message' => $request->message]);
+            }
+        }
+    }
 }
