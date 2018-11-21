@@ -21,6 +21,10 @@ if (!empty($proxy_scheme)) {
    URL::forceScheme($proxy_scheme);
 }
 
+// ---- poll module routes ----
+Route::get('/joinpoll/{polltoken}', 'PollController@showJoinPollView')->name('Poll.showJoinPollView');
+
+
 Route::get('/', 'HomeController@showStartpage')->name('Home.showStartPage');
 //route to show the register form
 Route::get('registerasCandidate', 'HomeController@showRegister')->name('Home.showRegister');

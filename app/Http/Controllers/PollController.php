@@ -39,6 +39,7 @@ class PollController extends Controller
                 return view('updatepollview', ['poll' => $poll, 'options' => $options, 'message' => $request->message]);
             }
         }
+	return redirect(route('Home.showLogin', ['message' => 3]));
     }
 
     public function createPoll(Request $request){
@@ -77,6 +78,7 @@ class PollController extends Controller
 		return parent::report($e);
         }
 	}}
+	return redirect(route('Home.showLogin', ['message' => 3]));
     }
 
     public function deletePoll(Request $request){
@@ -86,6 +88,7 @@ class PollController extends Controller
 		return redirect(route('showpolloverview', ['message'=>0]));
 	    }
 	}
+	return redirect(route('Home.showLogin', ['message' => 3]));
     }
 
     public function updatePoll(Request $request){
@@ -115,6 +118,7 @@ class PollController extends Controller
        		    }
             }
         }
+	return redirect(route('Home.showLogin', ['message' => 3]));
     }
 
     //Generates the token string
@@ -134,9 +138,10 @@ class PollController extends Controller
         //check if Election Group Leader is logged in
         if(Session::has('role')){
             if(Session::get('role')==0){
-                return view('joinpollview', [ 'poll' => Poll::findOrFail($request->polltoken), 'message' => $request->message]);
+                return view('joinpollview', [ 'poll' => Poll::where('token', $request->polltoken)->first(), 'message' => $request->message]);
             }
         }
+	return redirect(route('Home.showLogin', ['message' => 3]));
     }
 
     public function showAssessView(Request $request)
@@ -164,7 +169,7 @@ class PollController extends Controller
             if(!validateInputs([ $request->token ])) { return redirect(route('Poll.showPollTokenView', ['message' => 1])); }
             $token=$request->token;
             $pollInDB=DB::table('poll')->where('token', $token)->first();
-	    if($pollInDB->current_participiants => $pollInDB->max_participants) { return redirect(route('Poll.showInputPollTokenView', ['message' => 0])); }
+	    if($pollInDB->current_participiants >= $pollInDB->max_participants) { return redirect(route('Poll.showInputPollTokenView', ['message' => 0])); }
 	    DB::table('poll')->increment('current_participiants');
 
 	    //to check if the user already has voted
@@ -179,7 +184,7 @@ class PollController extends Controller
 
 	   // $options = DB::table('option')->where('poll_token', $token)->get();
             
-	    $return redirect(route('Poll.showAssessView',['polltoken'=>$token]));
+	    return redirect(route('Poll.showAssessView',['polltoken'=>$token]));
             }
         catch (Exception $e) {
             return redirect(route('Poll.showInputPollTokenView', ['message' => 4])); // token not in db
@@ -213,6 +218,7 @@ class PollController extends Controller
                 return view('pollstatistics', [ 'poll' => Poll::findOrFail($request->polltoken), 'statistics' => $statistics, 'message' => $request->message]);
             }
         }
+	return redirect(route('Home.showLogin', ['message' => 3]));
     }
 
     public function showPollStatisticsOverview(Request $request)
@@ -223,5 +229,6 @@ class PollController extends Controller
                 return view('pollstatisticsoverview', [ 'polls' => Poll::all(), 'message' => $request->message]);
             }
         }
+	return redirect(route('Home.showLogin', ['message' => 3]));
     }
 }
