@@ -118,3 +118,32 @@ Route::get('admin/user/delete/{u_id}','AdminController@deleteUser')->name('admin
 Route::post('admin/user/create','AdminController@createUser')->name('admin.createUser');
 //show create user
 Route::get('admin/user/create','AdminController@showUserCreate')->name('admin.showUserCreate');
+
+
+// Intelect - Poll module
+//show create g
+Route::get('/egl/polls/create','PollController@showCreatePollView')->name('Poll.showCreatePollView');
+//create g
+Route::post('/egl/polls/create','PollController@createPoll')->name('Poll.createPoll');
+//show update g
+Route::get('/egl/polls/{poll_id}/update','PollController@showUpdatePollView')->name('Poll.showUpdatePollView');
+//update gn
+Route::post('/egl/polls/{poll_id}/update','PollController@updatePoll')->name('Poll.updatePoll');
+//delete g
+Route::get('/egl/polls/{poll_id}/delete','PollController@deletePoll')->name('Poll.deletePoll');
+
+//showJoinPollView - M
+Route::get('/polls/{poll_id}/join','PollController@showJoinPollView')->name('Poll.showJoinPollView');
+
+//showAssessView
+Route::get('/polls/{poll_id}/assess','PollController@showAssessView')->name('Poll.showAssessView');
+//inputPollTokenView
+Route::get('/polls/inputToken','PollController@inputPollTokenView')->name('Poll.inputPollTokenView');
+//waitforstart
+Route::get('/polls/{poll_id}/waitingforstart','PollController@showWaitingPage')->name('Poll.showWaitingPage');
+
+Route::get('/polls/{poll_id}/assess','PollController@showAssessView')->name('Poll.assessment');
+
+Route::post('/polls/{poll_id}/assess','PollController@addPoints')->name('Poll.assess');
+
+Route::get('/egl/polls/{poll_id}/statistics','PollController@showPollStatistics')->name('Poll.showPollStatistics');
