@@ -22,7 +22,7 @@ if (!empty($proxy_scheme)) {
 }
 
 // ---- poll module routes ----
-Route::get('/joinpoll/{polltoken}', 'PollController@showJoinPollView')->name('Poll.showJoinPollView');
+Route::get('/polls/joinpoll/{polltoken}', 'PollController@showJoinPollView')->name('Poll.showJoinPollView');
 
 
 Route::get('/', 'HomeController@showStartpage')->name('Home.showStartPage');
@@ -147,3 +147,4 @@ Route::get('/polls/{poll_id}/assess','PollController@showAssessView')->name('Pol
 Route::post('/polls/{poll_id}/assess','PollController@addPoints')->name('Poll.assess');
 
 Route::get('/egl/polls/{poll_id}/statistics','PollController@showPollStatistics')->name('Poll.showPollStatistics');
+Route::get('/polls/{poll_id}/isStarted','PollController@isPollStarted')->name('Poll.isPollStarted');
