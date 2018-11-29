@@ -14,7 +14,8 @@
 		<center>
 		<h2>{{ $poll->title }}</h2>
 		<h3>Bitte warten Sie, bis die Umfrage gestartet ist!</h3>
-<div class="preloader-wrapper big active">
+<br><br><br><br><br><br>
+<div class="preloader-wrapper big active" id="spinner">
       <div class="spinner-layer spinner-blue">
         <div class="circle-clipper left">
           <div class="circle"></div>
@@ -56,7 +57,7 @@
       </div>
     </div>
 <br>
-		  <button id="reloadButton" class="btn waves-effect waves-light" type="submit" disabled="true" onClick="window.location.reload()" name="action">Weiter zur Umfrage
+		  <button id="reloadButton" style="display:none;" class="btn waves-effect waves-light" type="submit" disabled="true" onClick="window.location.reload()" name="action">Weiter zur Umfrage
 		    <i class="material-icons right">send</i>
           	  </button>
 		</center>
@@ -69,7 +70,11 @@
 	var token = <?php echo json_encode($poll->token) ?>;
          setInterval(function(){
 	$.get("/polls/"+token+"/isStarted", function(data, status){
-            document.getElementById("reloadButton").disabled = !data.isStarted;
+	    if(data.isStarted){
+	        document.getElementById("spinner").style.display = 'none';
+                document.getElementById("reloadButton").disabled = false;
+	        document.getElementById("reloadButton").style.display = 'block';
+	    }
     });
 	 }, 2000);
     </script>
