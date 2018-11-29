@@ -84,7 +84,7 @@ class PollController extends Controller
 	if(Session::has('role')){
             if(Session::get('role')==0){
         DB::table('poll')->where('token', $request->poll_id)->delete();
-        return redirect(route('Poll.showCreatePollView', ['message'=>0]));
+        return redirect(route('Poll.showPollOverview', ['message'=>0]));
         }
     }
 	return redirect(route('Home.showLogin', ['message' => 3]));

@@ -148,3 +148,4 @@ Route::post('/polls/{poll_id}/assess','PollController@addPoints')->name('Poll.as
 
 Route::get('/egl/polls/{poll_id}/statistics','PollController@showPollStatistics')->name('Poll.showPollStatistics');
 Route::get('/polls/{poll_id}/isStarted','PollController@isPollStarted')->name('Poll.isPollStarted');
+Route::get('/egl/polls','PollController@showPollStatisticsOverview')->name('Poll.showPollOverview');
