@@ -160,7 +160,7 @@ class PollController extends Controller
 
     public function showInputPollTokenView(Request $request)
     {
-        return view('inputpolltokenview', [ 'message' => $request->message]);
+        return view('inputpolltoken', [ 'message' => $request->message]);
     }
 
     // verifies the token
@@ -169,12 +169,13 @@ class PollController extends Controller
             if(!validateInputs([ $request->token ])) { return redirect(route('Poll.showPollTokenView', ['message' => 1])); }
             $token=$request->token;
             $pollInDB=DB::table('poll')->where('token', $token)->first();
-	    if($pollInDB->current_participiants >= $pollInDB->max_participants) { return redirect(route('Poll.showInputPollTokenView', ['message' => 0])); }
-	    DB::table('poll')->increment('current_participiants');
+	    if($pollInDB->current_participants >= $pollInDB->max_participants) { return redirect(route('Poll.showInputPollTokenView', ['message' => 0])); }
+	    DB::table('poll')->increment('current_participants');
 
 	    //to check if the user already has voted
-            if($request->session()->exists('poll_token')){
-		$arr = $request->session()->put('poll_token');
+            if($request->session()->has('poll_token')){
+		$arr = $request->session()->get('poll_token');
+		//$arr = array();
 		if(in_array($pollInDB->token, $arr)) { return redirect(route('Poll.showInputPollTokenView', ['message' => 0])); }
 		array_push($arr, $pollInDB->token);
 		$request->session()->put('poll_token', $arr);
@@ -184,7 +185,7 @@ class PollController extends Controller
 
 	   // $options = DB::table('option')->where('poll_token', $token)->get();
             
-	    return redirect(route('Poll.showAssessView',['polltoken'=>$token]));
+	    return redirect(route('Poll.showAssessView', ['poll_id' => $token ]));
             }
         catch (Exception $e) {
             return redirect(route('Poll.showInputPollTokenView', ['message' => 4])); // token not in db

@@ -16,7 +16,7 @@
       </div>
       <div class="row">
 	<h3>Oder QR-Code scannen:</h3>
-       <?php QRCode::url(Request::root()."/inputToken?token=".$poll->token)->setSize(13)->svg(); ?>
+       <?php QRCode::url(Request::root()."/polls/".$poll->token."/assess")->setSize(13)->svg(); ?>
       </div>
     </center>
   </main>

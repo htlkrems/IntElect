@@ -138,11 +138,12 @@ Route::get('/polls/{poll_id}/join','PollController@showJoinPollView')->name('Pol
 //showAssessView
 Route::get('/polls/{poll_id}/assess','PollController@showAssessView')->name('Poll.showAssessView');
 //inputPollTokenView
-Route::get('/polls/inputToken','PollController@inputPollTokenView')->name('Poll.inputPollTokenView');
+Route::get('/polls/inputToken','PollController@showInputPollTokenView')->name('Poll.showInputPollTokenView');
+Route::post('/polls/inputToken','PollController@inputToken')->name('Poll.inputToken');
 //waitforstart
 Route::get('/polls/{poll_id}/waitingforstart','PollController@showWaitingPage')->name('Poll.showWaitingPage');
 
-Route::get('/polls/{poll_id}/assess','PollController@showAssessView')->name('Poll.assessment');
+//Route::get('/polls/{poll_id}/assess','PollController@showAssessView')->name('Poll.assessment');
 
 Route::post('/polls/{poll_id}/assess','PollController@addPoints')->name('Poll.assess');
 
