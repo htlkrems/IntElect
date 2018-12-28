@@ -49,6 +49,12 @@ if(message != null){
 		case 11:
 			printMessage('Aktion in diesem Zeitraum nicht möglich!', true);
 			break;
+		case 12:
+			printMessage('Maximale Anzahl an Teilnehmer bereits erreicht!', true);
+			break;
+		case 13:
+			printMessage('Bereits abgestimmt!', true);
+			break;
 
 		// --- SUCCESS ---
 		case 51:

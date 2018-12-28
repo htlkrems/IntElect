@@ -43,6 +43,17 @@
         </div>
       </div>
     </div>
+    <div class="col s12 m4">
+      <div class="card teal darken-1 small">
+        <div class="card-content white-text">
+          <span class="card-title">An Umfrage teilnehmen</span>
+          <p>Hier können die Umfrage-Tokens der von Wahlgruppenleitern erstellten Umfragen eingegeben werden. Anschließend kann man seine Stimme vergeben.
+        </div>
+        <div class="card-action">
+          <a href="{{route('Poll.showInputPollTokenView')}}">Umfrage-Code eingeben</a>
+        </div>
+      </div>
+    </div>
     </div>
   </div>
 </main>

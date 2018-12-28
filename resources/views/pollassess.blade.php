@@ -5,7 +5,7 @@
     <title>.:: IntElect - Wahlgruppenleiter ::.</title>
   </head>
 <body>
-  @include('mainnav')
+<!--  @include('mainnav') -->
   <div class="container">
   	<div class="row">
   		<h4>{{$poll->title}}</h4>
@@ -20,12 +20,12 @@
   							<span class="card-title">{{$option->text}}</span>
   								<p class="range-field">
                  				<input type="range" min="0" class='tovalidate pollpointInput' max="10" name="points[{{$option->id}}]" id="maxp{{$option->id}}"/>
-                 				<center><output for="maxp{{$option->id}}" class="output"></output></center>
+                 				<div class="col s12"><span class="left">0</span> <span class="right">10</span></div>
+						<center><output for="maxp{{$option->id}}" class="output"></output></center>
              					</p>
   						</div>
   					</div>
   			<?php }
-  			
   			?><center><button class="btn waves-effect waves-light" type="submit" name="action">Absenden</button></center>
   		</form>
   	</div>

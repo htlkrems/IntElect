@@ -19,6 +19,7 @@
         <p><b>Maximale Teilnehmerzahl: </b>{{$poll->max_participants}}</p>
         <p><b>Tatsächliche Teilnehmerzahl: </b>{{$poll->current_participants}}</p>
         <p>{{ $poll->description }}</p>
+	<a class="waves-effect waves-light btn" href="{{route("Poll.showJoinPollView", $poll->token)}}">Join-View anzeigen</a>
       </div>
     </div>
   </div>

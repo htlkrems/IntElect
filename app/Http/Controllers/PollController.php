@@ -71,7 +71,7 @@ class PollController extends Controller
         }
 
         DB::commit();
-        return redirect(route('Poll.showCreatePollView', ['message'=>0]));
+        return redirect(route('Poll.showPollOverview', ['message'=>57]));
         } catch (Exception $e) {
                 DB::rollBack();
         return parent::report($e);
@@ -84,7 +84,8 @@ class PollController extends Controller
 	if(Session::has('role')){
             if(Session::get('role')==0){
         DB::table('poll')->where('token', $request->poll_id)->delete();
-        return redirect(route('Poll.showPollOverview', ['message'=>0]));
+        return redirect(route('Poll.showPollOverview', ['message'=>63]));
+
         }
     }
 	return redirect(route('Home.showLogin', ['message' => 3]));
@@ -96,7 +97,7 @@ class PollController extends Controller
         try {
                 DB::beginTransaction();
 
-            DB::table('option')->where('poll_token', $request->polltoken)->delete();
+            //DB::table('option')->where('poll_token', $request->polltoken)->delete();
             $poll = Poll::where('token',$request->polltoken)->first();
             $poll->title=$request->polltitle;
             $poll->description=$request->polldescription;
@@ -104,12 +105,29 @@ class PollController extends Controller
             $poll->end=$request->pollend.' '.$request->pollendtime;
             $poll->max_participants=$request->max_participants;
 
+	    $options = DB::table('option')->where([ 'poll_token' => $request->polltoken ])->get();
             foreach (json_decode($request->options) as $option){
-                    DB::table('option')->insert(array('text' => $option, 'poll_token' => $request->polltoken) );
-                }
+                    $optionsInDB = DB::table('option')->where([ ['text', $option], [ 'poll_token', $request->polltoken ] ])->get();
+		    if(sizeof($optionsInDB) == 0){
+			    DB::table('option')->insert(array('text' => $option, 'poll_token' => $request->polltoken) );
+			    continue;
+		    }
+            }
+	    foreach ($options as $option){
+		$break=false;
+		foreach (json_decode($request->options) as $o){
+        	    if($option->text==$o){
+            		$break=true;
+			break;
+        	    }
+    		}
+		if($break) { continue; }
+		DB::table('option')->where('id', $option->id)->delete();
+	    }
+
             DB::table('poll')->where('token',$poll->token)->update(array('title'=>$request->polltitle, 'description'=>$request->polldescription, 'begin'=>$poll->begin, 'end'=>$poll->end, 'max_participants'=>$poll->max_participants));
             DB::commit();
-                    return redirect(route('Poll.showCreatePollView', ['message'=>0]));
+                    return redirect(route('Poll.showPollOverview', ['message'=>58]));
 
             } catch (Exception $e) {
                    DB::rollBack();
@@ -137,7 +155,7 @@ class PollController extends Controller
         //check if Election Group Leader is logged in
         if(Session::has('role')){
             if(Session::get('role')==0){
-                return view('joinpollview', [ 'poll' => Poll::where('token',$request->polltoken)->first(), 'message' => $request->message]);
+                return view('joinpollview', [ 'poll' => Poll::where('token',$request->poll_id)->first(), 'message' => $request->message]);
             }
         }
 	return redirect(route('Home.showLogin', ['message' => 3]));
@@ -145,15 +163,38 @@ class PollController extends Controller
 
     public function showAssessView(Request $request)
     {
-    //TODO
     $poll = Poll::where('token',$request->poll_id)->first();
+/*    if($poll->current_participants >= $poll->max_participants) { return redirect(route('Poll.showInputPollTokenView', ['message' => 12])); }
+       DB::table('poll')->increment('current_participants'); */
+    //to check if the user already has voted
+            /* if($request->session()->has('poll_token')){
+                $arr = $request->session()->get('poll_token');
+                //$arr = array();
+                if(in_array($poll->token, $arr)) { return redirect(route('Poll.showInputPollTokenView', ['message' => 13])); }
+                array_push($arr, $poll->token);
+                $request->session()->put('poll_token', $arr);
+            } else {
+                $request->session()->put('poll_token', [ $poll->token ]);
+            } */
+	if($poll->current_participants >= $poll->max_participants) { return redirect(route('Poll.showInputPollTokenView', ['message' => 12])); }
+//       DB::table('poll')->increment('current_participants');
     if(!($poll->begin < date('Y-m-d H:i:s') && $poll->end > date('Y-m-d H:i:s'))){
         return view('waitingview', [ 'poll' => Poll::where('token',$request->poll_id)->first(), 'message' => $request->message]);
     } else {
         if($poll->begin < date('Y-m-d H:i:s') && $poll->end > date('Y-m-d H:i:s')) {
-            return view('pollassess', [ 'poll' => Poll::where('token',$request->poll_id)->first(), 'message' => $request->message, 'options'=>DB::table('option')->where('poll_token', $request->poll_id)->get()]);
+            if($request->session()->has('poll_token')){
+                $arr = $request->session()->get('poll_token');
+                //$arr = array();
+                if(in_array($poll->token, $arr)) { return redirect(route('Poll.showInputPollTokenView', ['message' => 13])); }
+                array_push($arr, $poll->token);
+                $request->session()->put('poll_token', $arr);
+            } else {
+                $request->session()->put('poll_token', [ $poll->token ]);
+            }
+	    DB::table('poll')->increment('current_participants');
+	    return view('pollassess', [ 'poll' => Poll::where('token',$request->poll_id)->first(), 'message' => $request->message, 'options'=>DB::table('option')->where('poll_token', $request->poll_id)->get()]);
         }
-        return redirect(route('Home.showStartPage', ['message'=>0]));
+        return redirect(route('Home.showStartPage', ['message'=>11]));
 
     }
     }
@@ -169,19 +210,19 @@ class PollController extends Controller
             if(!validateInputs([ $request->token ])) { return redirect(route('Poll.showPollTokenView', ['message' => 1])); }
             $token=$request->token;
             $pollInDB=DB::table('poll')->where('token', $token)->first();
-	    if($pollInDB->current_participants >= $pollInDB->max_participants) { return redirect(route('Poll.showInputPollTokenView', ['message' => 0])); }
+	    /* if($pollInDB->current_participants >= $pollInDB->max_participants) { return redirect(route('Poll.showInputPollTokenView', ['message' => 12])); }
 	    DB::table('poll')->increment('current_participants');
 
 	    //to check if the user already has voted
             if($request->session()->has('poll_token')){
 		$arr = $request->session()->get('poll_token');
 		//$arr = array();
-		if(in_array($pollInDB->token, $arr)) { return redirect(route('Poll.showInputPollTokenView', ['message' => 0])); }
+		if(in_array($pollInDB->token, $arr)) { return redirect(route('Poll.showInputPollTokenView', ['message' => 13])); }
 		array_push($arr, $pollInDB->token);
 		$request->session()->put('poll_token', $arr);
 	    } else {
 		$request->session()->put('poll_token', [ $pollInDB->token ]);
-	    }
+	    }*/
 
 	   // $options = DB::table('option')->where('poll_token', $token)->get();
             
@@ -201,7 +242,7 @@ class PollController extends Controller
             }
 
         DB::commit();
-            return redirect(route('Home.showStartPage', ['message'=>0]));
+            return redirect(route('Home.showStartPage', ['message'=>53]));
 
         } catch (Exception $e) {
 	DB::rollBack();
@@ -214,7 +255,7 @@ class PollController extends Controller
         //check if Election Group Leader is logged in
         if(Session::has('role')){
             if(Session::get('role')==0){
-        $statistics = DB::select('SELECT o.text as otext, avg(p.points) as oaverage FROM option o JOIN point p ON (o.id=p.option_id) WHERE o.poll_token=:token GROUP BY o.id;', ['token' =>$request->poll_id]);
+        $statistics = DB::select('SELECT o.text as otext, s.oaverage FROM option o JOIN (SELECT o.id as id, avg(p.points) as oaverage FROM option o JOIN point p ON (o.id=p.option_id) WHERE o.poll_token=:token GROUP BY o.id) s on (s.id=o.id);', ['token' => $request->poll_id]);
 
                 return view('pollstatistics', [ 'poll' => Poll::where('token',$request->poll_id)->first(), 'statistics' => $statistics, 'message' => $request->message]);
             }

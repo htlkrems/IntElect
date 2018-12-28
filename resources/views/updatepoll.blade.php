@@ -8,7 +8,7 @@
   @include('mainnav')
   <div class="container">
       <div class="row">
-          <h4>Umfrage erstellen</h4>
+          <h4>Umfrage bearbeiten</h4>
           <div class="divider"></div>
           <form class="col s12" method="post" action="{{route('Poll.updatePoll',['poll_id'=>$poll->token])}}" enctype="multipart/form-data" onsubmit="return validateform()">
   		    <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
@@ -33,8 +33,9 @@
                   				</div>
                           <h5>Maximale Teilnehmerzahl</h5>
                           <p class="range-field col s12">
-                 <input type="range" id="maxp" min="0" class='tovalidate' max="100" name="max_participants" value="{{$poll->max_participants}}"/>
+                 <input type="range" id="maxp" min="1" class='tovalidate' max="100" name="max_participants" value="{{$poll->max_participants}}"/>
                  <center><output for="maxp" class="output"></output></center>
+		 <span class="left">1</span><span class="right">100</span>
              </p>
                       </div>
                   </div>

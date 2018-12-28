@@ -9,8 +9,14 @@
   @include('mainnav')
   <main class="container">
       <div class="row">
-      	<div class="col s12">
-     <h4>Umfragen</h4><br>
+     <h4>Umfragen
+     <a href="{{route('Poll.showCreatePollView')}}" style="color: black;float: right;">
+        <i class="small material-icons">add_circle</i>
+     </a></h4> 	
+</div>
+</div>
+</div>
+<div class="row">
      <?php 
       foreach ($polls as $poll) {
         ?>
@@ -19,11 +25,13 @@
       <div class="card grey lighten-4 small">
         <div class="card-content black-text">
           <span class="card-title black-text">{{$poll->title}}</span>
+	  <div class="divider"></div>
           <p>{{$poll->description}}</p>
         </div>
-         <div class="card-action">
-          <a href="{{route('Poll.showPollStatistics',['poll_id'=>$poll->token])}}">Weitere Informationen</a>
-          <a href="{{route('Poll.deletePoll',['poll_id'=>$poll->token])}}">Löschen</a>
+         <div class="card-action valign-wrapper">
+          <a href="{{route('Poll.showPollStatistics',['poll_id'=>$poll->token])}}" class="valign-wrapper"><i class="material-icons">insert_chart</i></a>
+          <a href="{{route('Poll.deletePoll',['poll_id'=>$poll->token])}}" class="right valign-wrapper"><i class="material-icons">delete</i></a>
+	  <a href="{{route('Poll.showUpdatePollView',['poll_id'=>$poll->token])}}" class="right valign-wrapper"><i class="material-icons">edit</i></a>
         </div>
       </div>
     </div>

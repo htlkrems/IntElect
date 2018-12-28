@@ -21,6 +21,7 @@
 	    <?php
 	    } if(Session::get('role')==0) { ?>
 		<li><a href="{{route('egl.showStartPage')}}"><i class="material-icons left">people</i>Wahlgruppenleiter-Startseite</a></li>
+		<li><a href="{{route('Poll.showPollOverview')}}"><i class="material-icons left">assignment</i>Umfragen</a></li>
 	    <?php
 	    } ?>
 	<li><a id="desktop-dropdown-button" href="#!" data-activates="userdropdown" data-constrainwidth="false" data-beloworigin="true"><i class="material-icons left">person</i>{{Session::get('username')}}<i class="material-icons right">arrow_drop_down</i></a></li>
@@ -47,6 +48,7 @@
           }
         if(Session::get('role')==0){ ?>
         <li><a href="{{route('egl.showStartPage')}}"><i class="material-icons left">people</i>Wahlgruppenleiter-Seite</a></li>
+	<li><a href="{{route('Poll.showPollOverview')}}"><i class="material-icons left">assignment</i>Umfragen</a></li>
         <?php
           }
         ?>

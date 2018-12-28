@@ -8,7 +8,7 @@
 </head>
 
 <body>
-  @include('mainnav')
+<!--  @include('mainnav') -->
   <main class="container">
     	  <div class="row">
 		<center>
@@ -63,7 +63,7 @@
 		</center>
       </div>
   </main>
-  @include('footer')
+<!--  @include('footer') -->
 </body>
 
 <script>
